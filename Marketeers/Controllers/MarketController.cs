@@ -11,7 +11,6 @@ using Marketeers.Models;
 
 namespace Marketeers.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class MarketController : ControllerBase
     {
@@ -21,13 +20,14 @@ namespace Marketeers.Controllers
             _configuration = configuration;
         }
 
+        [Route("api/[controller]/all")]
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult GetAllMarkets()
         {
             string query = @"
-                select DepartmentId,
-                        DepartmentName
-                from Department
+                select marketid,
+                        marketname
+                from markets
             ";
 
             DataTable table = new DataTable();
@@ -39,6 +39,39 @@ namespace Marketeers.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+            }
+
+            return new JsonResult(table);
+        }
+
+        [Route("api/[controller]/{marketid}")]
+        [HttpGet]
+        public JsonResult GetMarketByID(int marketid)
+        {
+            string query = @"
+                select marketid,
+                        marketname
+                from markets
+                where marketid = @marketid
+            ";
+
+            DataTable table = new DataTable();
+            string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
+
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(connectionString))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@marketid", marketid);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
 
