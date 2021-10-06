@@ -3,9 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
+using Newtonsoft.Json;
 using Npgsql;
 using System.Data;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Marketeers.Services
 {
@@ -27,17 +30,15 @@ namespace Marketeers.Services
                     command.Parameters.Add("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Username;
                     command.Parameters.Add("@password", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Password;
                     
-                    //table.Load(myReader);
                     try
                     {
                         NpgsqlDataReader reader = command.ExecuteReader();
-                        //DataTable table = reader.GetSchemaTable();
-
+                        DataTable table = new DataTable();
                         if (reader.HasRows)
                         {
-                            //user.Id = (int)reader.GetValue(reader.GetOrdinal("customerid"));
+                            table.Load(reader);
                             successful = true;
-                            //Trace.WriteLine(reader.GetValue(0).ToString());
+                            user.Id = Convert.ToInt32(table.Rows[0][0].ToString());
                         }
                         reader.Close();
                     }
