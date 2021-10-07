@@ -35,6 +35,17 @@ namespace Marketeers.Services
         {
             return usersDAO.CheckUsername(user);
         }
+
+        //Market
+        public bool IsValid(MarketModel user)
+        {
+            return usersDAO.FindUserandPass(user);
+        }
+
+        public bool Verify(MarketModel user)
+        {
+            return usersDAO.CheckUsername(user);
+        }
     }
     
 }
