@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Marketeers.Models
 {
-    public class UserModel
+    public class CustomerModel
     {
         public int Id { get; set; }
 

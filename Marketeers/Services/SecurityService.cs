@@ -15,11 +15,16 @@ namespace Marketeers.Services
 
         }
 
-        public bool IsValid(UserModel user)
+        public bool IsValid(CustomerModel user)
         {
             return usersDAO.FindUserandPass(user);
         }
-    }
 
+        public bool Verify(CustomerModel user)
+        {
+            return usersDAO.CheckUsername(user);
+        }
+
+    }
     
 }
