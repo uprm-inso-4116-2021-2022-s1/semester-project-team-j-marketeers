@@ -14,6 +14,7 @@ namespace Marketeers.Services
         {
 
         }
+
         //Customer
         public bool IsValid(CustomerModel user)
         {

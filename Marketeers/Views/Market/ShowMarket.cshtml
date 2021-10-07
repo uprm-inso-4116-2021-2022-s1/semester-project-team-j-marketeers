@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Marketeers.Models.MarketModel>
+@{
+    ViewBag.Title = "Market List";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var market in (IEnumerable<MarketModel>)TempData["market"])
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => market.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => market.Username)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
