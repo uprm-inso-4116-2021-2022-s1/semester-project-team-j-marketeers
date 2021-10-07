@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Marketeers.Controllers
 {
-    public class LoginController : Controller
+    public class CustomerLoginController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult CustomerLogin(CustomerModel user)
+        
+        public IActionResult Login(CustomerModel user)
         {
             SecurityService security = new SecurityService();
 
@@ -28,20 +28,6 @@ namespace Marketeers.Controllers
                 return View("Failed", user);
             }
         }
-
-        //public IActionResult DriverLogin(DriverModel user)
-        //{
-        //    SecurityService security = new SecurityService();
-
-        //    if (security.IsValid(user))
-        //    {
-        //        return View("Successful", user);
-        //    }
-        //    else
-        //    {
-        //        return View("Failed", user);
-        //    }
-        //}
 
     }
 }

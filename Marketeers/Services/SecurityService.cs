@@ -14,7 +14,7 @@ namespace Marketeers.Services
         {
 
         }
-
+        //Customer
         public bool IsValid(CustomerModel user)
         {
             return usersDAO.FindUserandPass(user);
@@ -25,6 +25,16 @@ namespace Marketeers.Services
             return usersDAO.CheckUsername(user);
         }
 
+        //Driver
+        public bool IsValid(DriverModel user)
+        {
+            return usersDAO.FindUserandPass(user);
+        }
+
+        public bool Verify(DriverModel user)
+        {
+            return usersDAO.CheckUsername(user);
+        }
     }
     
 }

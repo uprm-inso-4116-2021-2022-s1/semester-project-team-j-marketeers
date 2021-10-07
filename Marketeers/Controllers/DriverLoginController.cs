@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Marketeers.Controllers
 {
-    public class RegisterController : Controller
+    public class DriverLoginController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult CustomerRegister(CustomerModel user)
+        public IActionResult Login(DriverModel user)
         {
             SecurityService security = new SecurityService();
 
-            if (security.Verify(user))
+            if (security.IsValid(user))
             {
                 return View("Successful", user);
             }
