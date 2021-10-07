@@ -11,5 +11,6 @@ namespace Marketeers.Models
         public int Customerid { get; set; }
         public int Driverid { get; set; }
         public int Marketid { get; set; }
+        public string Location { get; set; }
     }
 }

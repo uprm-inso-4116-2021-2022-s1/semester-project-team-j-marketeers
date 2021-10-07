@@ -152,8 +152,8 @@ namespace Marketeers.Controllers
         public JsonResult AddOrder(OrderModel order)
         {
             string query = @"
-                insert into orders(customerid, marketid)
-                values(@customerid, @marketid)
+                insert into orders(customerid, marketid, location)
+                values(@customerid, @marketid, @location)
             ";
 
             DataTable table = new DataTable();
@@ -167,6 +167,7 @@ namespace Marketeers.Controllers
                 {
                     myCommand.Parameters.AddWithValue("@customerid", order.Customerid);
                     myCommand.Parameters.AddWithValue("@marketid", order.Marketid);
+                    myCommand.Parameters.AddWithValue("@location", order.Location);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();
@@ -233,6 +234,38 @@ namespace Marketeers.Controllers
                 }
             }
             return new JsonResult("Order is complete");
+        }
+        
+        [Route("api/[controller]/{orderid}/products")]
+        [HttpGet]
+        public JsonResult GetItemsFromOrder(int orderid)
+        {
+            string query = @"
+                select *
+                from items natural inner join products
+                where orderid = @orderid
+            ";
+
+            DataTable table = new DataTable();
+            string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
+
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(connectionString))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@orderid", orderid);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+            }
+
+            return new JsonResult(table);
         }
     }
 }

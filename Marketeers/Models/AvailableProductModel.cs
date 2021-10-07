@@ -8,8 +8,9 @@ namespace Marketeers.Models
     public class AvailableProductModel
     {
         public int Id { get; set; }
-        public int Customerid { get; set; }
-        public int Driverid { get; set; }
+        public string Itemname { get; set; }
+        public float price { get; set; }
+        public int quantity { get; set; }
         public int Marketid { get; set; }
     }
 }
