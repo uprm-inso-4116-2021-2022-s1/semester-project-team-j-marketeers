@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Marketeers.Models;
+using Newtonsoft.Json;
 
 namespace Marketeers.Controllers
 {
@@ -23,7 +24,7 @@ namespace Marketeers.Controllers
 
         [Route("api/[controller]/all")]
         [HttpGet]
-        public JsonResult GetAllOrders()
+        public string GetAllOrders()
         {
             string query = @"
                 select orderid,
@@ -49,12 +50,12 @@ namespace Marketeers.Controllers
                 }
             }
 
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
 
         [Route("api/[controller]/market/{marketid}")]
         [HttpGet]
-        public JsonResult GetAllOrdersFromMarket(int marketid)
+        public string GetAllOrdersFromMarket(int marketid)
         {
             string query = @"
                 select orderid,
@@ -81,12 +82,12 @@ namespace Marketeers.Controllers
 
                 }
             }
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
 
         [Route("api/[controller]/customer/{customerid}")]
         [HttpGet]
-        public JsonResult GetAllOrdersFromCustomer(int customerid)
+        public string GetAllOrdersFromCustomer(int customerid)
         {
             string query = @"
                 select orderid,
@@ -113,12 +114,12 @@ namespace Marketeers.Controllers
 
                 }
             }
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
 
         [Route("api/[controller]/free")]
         [HttpGet]
-        public JsonResult GetAllOrdersFreeOrders()
+        public string GetAllOrdersFreeOrders()
         {
             string query = @"
                 select orderid,
@@ -144,12 +145,12 @@ namespace Marketeers.Controllers
 
                 }
             }
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
 
         [Route("api/[controller]/add")]
         [HttpPost]
-        public JsonResult AddOrder(OrderModel order)
+        public string AddOrder(OrderModel order)
         {
             string query = @"
                 insert into orders(customerid, marketid, location)
@@ -174,12 +175,12 @@ namespace Marketeers.Controllers
                     myCon.Close();
                 }
             }
-            return new JsonResult("Order is added");
+            return JsonConvert.SerializeObject("Order is added");
         }
 
         [Route("api/[controller]/take")]
         [HttpPut]
-        public JsonResult TakeOrder(OrderModel order)
+        public string TakeOrder(OrderModel order)
         {
             string query = @"
                 update orders
@@ -204,12 +205,12 @@ namespace Marketeers.Controllers
                     myCon.Close();
                 }
             }
-            return new JsonResult("Order is complete");
+            return JsonConvert.SerializeObject("Order is complete");
         }
 
         [Route("api/[controller]/complete/{orderid}")]
         [HttpPut]
-        public JsonResult CompleteOrderStatus(int orderid)
+        public string CompleteOrderStatus(int orderid)
         {
             string query = @"
                 update orders
@@ -233,12 +234,12 @@ namespace Marketeers.Controllers
                     myCon.Close();
                 }
             }
-            return new JsonResult("Order is complete");
+            return JsonConvert.SerializeObject("Order is complete");
         }
         
         [Route("api/[controller]/{orderid}/products")]
         [HttpGet]
-        public JsonResult GetItemsFromOrder(int orderid)
+        public string GetItemsFromOrder(int orderid)
         {
             string query = @"
                 select *
@@ -265,7 +266,7 @@ namespace Marketeers.Controllers
                 }
             }
 
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
     }
 }

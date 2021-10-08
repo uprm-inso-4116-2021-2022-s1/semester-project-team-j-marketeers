@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System;
@@ -9,7 +10,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Marketeers.Models;
 using Marketeers.Services;
+//using System.Text.Json;
 using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json.Serialization;
+//using Newtonsoft.Json;
 
 namespace Marketeers.Controllers
 {
@@ -20,9 +25,11 @@ namespace Marketeers.Controllers
         [HttpGet]
         public ActionResult Market()
         {
-            List<MarketModel> market = new List<MarketModel>();
-            market = JsonConvert.DeserializeObject<List<MarketModel>>(GetAllMarkets().ToString());
-            TempData["market"] = market;
+            List<MarketModel> markets;
+            string json = GetAllMarkets();
+            Console.WriteLine(json);
+            markets = JsonConvert.DeserializeObject<List<MarketModel>>(json);
+            TempData["market"] = markets;
             return View("ShowMarket");
         }
 
@@ -35,7 +42,7 @@ namespace Marketeers.Controllers
 
         [Route("api/[controller]/all")]
         [HttpGet]
-        public DataTable GetAllMarkets()
+        public string GetAllMarkets()
         {
             string query = @"select marketid, marketname from markets";
 
@@ -56,12 +63,12 @@ namespace Marketeers.Controllers
 
                 }
             }
-            return table;
+            return JsonConvert.SerializeObject(table);
         }
 
         [Route("api/[controller]/{marketid}")]
         [HttpGet]
-        public JsonResult GetMarketByID(int marketid)
+        public string GetMarketByID(int marketid)
         {
             string query = @"select marketid, marketname from markets where marketid = @marketid";
 
@@ -84,12 +91,12 @@ namespace Marketeers.Controllers
                 }
             }
 
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
 
         [Route("api/[controller]/{marketid}/products")]
         [HttpGet]
-        public JsonResult GetProductsFromMarket(int marketid)
+        public string GetProductsFromMarket(int marketid)
         {
             string query = @"
                 select *
@@ -116,7 +123,7 @@ namespace Marketeers.Controllers
                 }
             }
 
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
     }
 }
