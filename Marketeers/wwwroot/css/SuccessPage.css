@@ -1,0 +1,27 @@
+.font_setup{
+    font-family: "Roboto", sans-serif;
+}
+.btn-color{
+    border-radius: 5px;
+    margin-top: 2%;
+    color: whitesmoke;
+    background-color: black;
+}
+
+.font-menu {
+    font-family: 'Comfortaa', cursive;
+}
+
+.vertical-center{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.hr-login {
+    border: 0;
+    background: linear-gradient(to right, rgba(102, 126, 234, 1), rgba(118, 75, 162, 1));
+    height: 1px;
+}
