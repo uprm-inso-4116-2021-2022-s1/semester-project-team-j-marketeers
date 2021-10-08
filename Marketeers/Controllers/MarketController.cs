@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using System;
@@ -8,12 +9,31 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Marketeers.Models;
+using Marketeers.Services;
+//using System.Text.Json;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json.Serialization;
+//using Newtonsoft.Json;
 
 namespace Marketeers.Controllers
 {
     [ApiController]
-    public class MarketController : ControllerBase
+    public class MarketController : Controller
     {
+        [Route("api/[controller]/showall")]
+        [HttpGet]
+        public ActionResult Market()
+        {
+            List<MarketModel> markets;
+            string json = GetAllMarkets();
+            Console.WriteLine(json);
+            markets = JsonConvert.DeserializeObject<List<MarketModel>>(json);
+            TempData["market"] = markets;
+            return View("ShowMarket");
+        }
+
+
         private readonly IConfiguration _configuration;
         public MarketController(IConfiguration configuration)
         {
@@ -22,13 +42,9 @@ namespace Marketeers.Controllers
 
         [Route("api/[controller]/all")]
         [HttpGet]
-        public JsonResult GetAllMarkets()
+        public string GetAllMarkets()
         {
-            string query = @"
-                select marketid,
-                        marketname
-                from markets
-            ";
+            string query = @"select marketid, marketname from markets";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -47,18 +63,44 @@ namespace Marketeers.Controllers
 
                 }
             }
-
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
 
         [Route("api/[controller]/{marketid}")]
         [HttpGet]
-        public JsonResult GetMarketByID(int marketid)
+        public string GetMarketByID(int marketid)
+        {
+            string query = @"select marketid, marketname from markets where marketid = @marketid";
+
+            DataTable table = new DataTable();
+            string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
+
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(connectionString))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@marketid", marketid);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+            }
+
+            return JsonConvert.SerializeObject(table);
+        }
+
+        [Route("api/[controller]/{marketid}/products")]
+        [HttpGet]
+        public string GetProductsFromMarket(int marketid)
         {
             string query = @"
-                select marketid,
-                        marketname
-                from markets
+                select *
+                from products
                 where marketid = @marketid
             ";
 
@@ -81,7 +123,7 @@ namespace Marketeers.Controllers
                 }
             }
 
-            return new JsonResult(table);
+            return JsonConvert.SerializeObject(table);
         }
     }
 }

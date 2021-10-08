@@ -32,13 +32,14 @@
                     <div class="form-group">
                         <input type="submit" value="Login" class="btn-color" />
                     </div>
+                    <div>
+                        <p>Don't have an account? <a asp-controller="CustomerRegister" asp-action="Index">Click to Register</a></p>  
+                    </div>
                 </form>
             </div>
         </div>
 
-        <div>
-            <a asp-action="Index">Back to List</a>
-        </div>
+
 
         @section Scripts {
             @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
