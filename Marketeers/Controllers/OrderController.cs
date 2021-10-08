@@ -90,9 +90,7 @@ namespace Marketeers.Controllers
         public string GetAllOrdersFromCustomer(int customerid)
         {
             string query = @"
-                select orderid,
-                       customerid,
-                       marketid
+                select *
                 from orders
                 where customerid = @customerid
             ";
@@ -169,6 +167,35 @@ namespace Marketeers.Controllers
                     myCommand.Parameters.AddWithValue("@customerid", order.Customerid);
                     myCommand.Parameters.AddWithValue("@marketid", order.Marketid);
                     myCommand.Parameters.AddWithValue("@location", order.Location);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+            return JsonConvert.SerializeObject("Order is added");
+        }
+
+        [Route("api/[controller]/add")]
+        [HttpPost]
+        public string AddItemToOrder(OrderedItemModel item)
+        {
+            string query = @"
+                insert into items(productid, orderid)
+                values(@productid, @orderid)
+            ";
+
+            DataTable table = new DataTable();
+            string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
+
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(connectionString))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@productid", item.Productid);
+                    myCommand.Parameters.AddWithValue("@orderid", item.Orderid);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();
