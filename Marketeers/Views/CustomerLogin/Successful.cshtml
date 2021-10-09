@@ -10,7 +10,7 @@
         <dd class="col-sm-10">
             <div>
                 <p><b>Your Orders</b></p>
-                <button class="btn-color" type="button">Track your order</button>
+                <button class="btn-color" type="button" onclick="location.href='@Url.Action("Index","DisplayOrder")'">Track your order</button>
             </div>
         </dd>
     </dl>
@@ -20,16 +20,19 @@
             <img src="/Img/productsIcon.png" alt="HTML5 Icon" style="width:128px;height:128px;">
         </dt>
         <dd class="col-sm-10">
-            <div>
-                <p><b>Start shopping</b></p>
-                <select class="option-color" class="browser-default custom-select">
-                    <option class="option-color" selected>Select Supermarket</option>
-                    <option class="option-color" value="1">Econo</option>
-                    <option class="option-color" value="2">Selectos</option>
-                    <option class="option-color" value="3">SuperMax</option>
-                </select>
-            </div>
-            <button class="btn-color" onclick="location.href='@Url.Action("Index","Product")'">Select Products ></button>
+            @*
+        <div>
+        <p><b>Start shopping</b></p>
+        <select class="option-color" class="browser-default custom-select">
+            <option class="option-color" selected>Select Supermarket</option>
+            <option class="option-color" value="1">Econo</option>
+            <option class="option-color" value="2">Selectos</option>
+            <option class="option-color" value="3">SuperMax</option>
+        </select>
+        </div>
+            *@
+            <p><b>Start Shopping</b></p>
+            <button class="btn-color" onclick="location.href='@Url.Action("show","Market")'">Select Supermarket ></button>
         </dd>
     </dl>
 </div>
