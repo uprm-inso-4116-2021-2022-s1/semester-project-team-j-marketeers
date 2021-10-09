@@ -63,6 +63,15 @@ body, html {
     height: 1px;
 }
 
+.adjust-pic-size{
+    width: 390px;
+    height: 390px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+}
+
 
 @media only screen and (max-width: 920px){
    .inner-container{

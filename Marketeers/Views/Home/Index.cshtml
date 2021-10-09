@@ -24,7 +24,7 @@
                 <div class="col-lg-6 order-lg-1">
                     <div class="p-5">
                         <h2 class="display-4">Groceries can now be easy!</h2>
-                        <p>Marketeers focuses on providing a platform that can be utilized for safe and easy shopping of groceries within local supermarkets near you. Simply select the supermarket of your choice, add your needed products to the cart and then process your order. Once your order is processed, it will be confirmed and delivered.<br><br>It's that simple.<br><br>What are you waiting for? Register Now.</p>
+                        <p><i>Marketeers</i> focuses on providing a platform that can be utilized for safe and easy shopping of groceries within local supermarkets near you. Simply select the supermarket of your choice, add your needed products to the cart and then process your order. Once your order is processed, it will be confirmed and delivered.<br><br>It's that simple.<br><br>What are you waiting for? <a asp-controller="CustomerRegister" asp-action="Index">Register now!</a></p>
                     </div>
                 </div>
             </div>
@@ -32,3 +32,44 @@
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<hr class="hr-login" />
+
+@* Cards for Login *@
+<div class="row row-cols-1 row-cols-md-3 g-4 mt-5">
+    <div class="col">
+        <div class="card h-100">
+            <img src="/Img/final-kart.svg" class="adjust-pic-size" alt="Stock Customer Image">
+            <div class="card-body">
+                <h5 class="card-title">Buy Fresh Groceries</h5>
+                <p class="card-text"> Stay safe and comfotable in your home while buying groceries. Try making an order to a nearby market by selecting from a high variety of quality products.</p>
+            </div>
+            <div class="card-footer">
+                <p class="text-muted">Want to buy groceries? <a asp-controller="CustomerLogin" asp-action="Index">Click Here</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="/Img/food-icon.svg" class="adjust-pic-size" alt="Stock Supermarket Image">
+            <div class="card-body">
+                <h5 class="card-title">Add Your Market</h5>
+                <p class="card-text">Provide customers with market to home deliveries. This service will help grow your market and reach more customers or even new ones. </p>
+            </div>
+            <div class="card-footer">
+                <p class="text-muted">Want to add your market? <a asp-controller="MarketLogin" asp-action="Index">Click Here</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="/Img/buggy.svg" class="adjust-pic-size" alt="Stock Driver Image">
+            <div class="card-body">
+                <h5 class="card-title">Become a Driver</h5>
+                <p class="card-text"> Pick up groceries at a market and deliver them in order to earn reliable money, while working anytime, and anywhere you can drive. </p>
+            </div>
+            <div class="card-footer">
+                <p class="text-muted">Want to deliver goods? <a asp-controller="DriverLogin" asp-action="Index">Click Here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
