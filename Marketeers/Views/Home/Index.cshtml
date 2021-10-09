@@ -2,7 +2,117 @@
     ViewData["Title"] = "Home Page";
 }
 
+@* Header*@
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to E-Market</h1>
+    <p>Groceries delivered right to your door </p>
+</div>
+
+@* Cards for Login *@
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card h-100">
+            <img src="/Img/HomeImgs/pexels-michael-burrows-7129160.jpg" class="card-img-top" alt="Stock Customer Image">
+            <div class="card-body">
+                <h5 class="card-title">Buy Fresh Groceries</h5>
+                <p class="card-text"> Stay safe and comfotable in your home while buying groceries. Try making an order to a nearby market by selecting from a high variety of quality products.</p>
+            </div>
+            <div class="card-footer">
+                <p class="text-muted">Want to buy groceries? <a asp-controller="CustomerLogin" asp-action="Index">Click Here</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="/Img/HomeImgs/pexels-nothing-ahead-7451961.jpg" class="card-img-top" alt="Stock Supermarket Image">
+            <div class="card-body">
+                <h5 class="card-title">Add Your Market</h5>
+                <p class="card-text">Provide customers with market to home deliveries. This service will help grow your market and reach more customers or even new ones. </p>
+            </div>
+            <div class="card-footer">
+                <p class="text-muted">Want to add your market? <a asp-controller="MarketLogin" asp-action="Index">Click Here</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="/Img/HomeImgs/pexels-rodnae-productions-7363163.jpg" class="card-img-top" alt="Stock Driver Image">
+            <div class="card-body">
+                <h5 class="card-title">Become a Driver</h5>
+                <p class="card-text"> Pick up groceries at a market and deliver them in order to earn reliable money, while working anytime, and anywhere you can drive. </p>
+            </div>
+            <div class="card-footer">
+                <p class="text-muted">Want to deliver goods? <a asp-controller="DriverLogin" asp-action="Index">Click Here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Information Header*@
+<div class="text-center">
+    <h1 class="display-4">General Information</h1>
+    <p>Learn more about our services and its benefits </p>
+</div>
+
+@* Cards for Information *@
+<div class="card mb-3" style="max-width: 2000px;">
+    <div class="row g-0">
+        <div class="col-lg-4">
+            <img src="/Img/HomeImgs/pexels-anna-shvets-3962285.jpg" class="card-img-top" alt="Stock Supermarket Image">
+        </div>
+        <div class="col-lg-8">
+            <div class="card-body">
+                <h5 class="card-title">Buying</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <ul>
+                    <li>Coffee</li>
+                    <li>Tea</li>
+                    <li>Milk</li>
+                </ul>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card mb-3" style="max-width: 2000px;">
+    <div class="row g-0">
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Market</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <ul>
+                    <li>Coffee</li>
+                    <li>Tea</li>
+                    <li>Milk</li>
+                </ul>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="/Img/HomeImgs/pexels-pixabay-264636.jpg" class="card-img-top" alt="Stock Supermarket Image">
+        </div>
+    </div>
+</div>
+
+
+<div class="card mb-3" style="max-width: 2000px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="/Img/HomeImgs/pexels-anna-shvets-4226269.jpg" class="card-img-top" alt="Stock Supermarket Image">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Delivery</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <ul>
+                    <li>Coffee</li>
+                    <li>Tea</li>
+                    <li>Milk</li>
+                </ul>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
 </div>
