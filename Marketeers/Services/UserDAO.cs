@@ -188,7 +188,7 @@ namespace Marketeers.Services
                 using (NpgsqlCommand command = new NpgsqlCommand(sqlStatement, connection))
                 {
 
-                    command.Parameters.Add("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Username;
+                    command.Parameters.Add("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Market;
                     command.Parameters.Add("@password", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Password;
 
                     try
@@ -227,7 +227,7 @@ namespace Marketeers.Services
                 connection.Open();
                 using (NpgsqlCommand command = new NpgsqlCommand("SELECT COUNT(*) FROM markets WHERE marketname = @username", connection))
                 {
-                    command.Parameters.AddWithValue("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Username;
+                    command.Parameters.AddWithValue("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Market;
                     exists = (int)(long)command.ExecuteScalar() > 0;
                 }
 
@@ -242,7 +242,7 @@ namespace Marketeers.Services
                     successful = true;
                     using (NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO markets (marketname, password) VALUES (@username, @password)", connection))
                     {
-                        cmd.Parameters.AddWithValue("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Username;
+                        cmd.Parameters.AddWithValue("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Market;
                         cmd.Parameters.AddWithValue("@password", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Password;
                         successful = true;
 

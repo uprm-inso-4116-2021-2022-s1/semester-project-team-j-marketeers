@@ -10,7 +10,7 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Username)
+                @Html.DisplayNameFor(model => model.Market)
             </th>
             <th></th>
         </tr>
@@ -20,10 +20,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => market.Id)
+                    <button type="button" class="btn btn-dark">Select</button>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => market.Username)
+                    @Html.DisplayFor(modelItem => market.Market)
                 </td>
             </tr>
         }

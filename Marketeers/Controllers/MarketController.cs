@@ -21,7 +21,7 @@ namespace Marketeers.Controllers
     [ApiController]
     public class MarketController : Controller
     {
-        [Route("api/[controller]/showall")]
+        [Route("/[controller]/show")]
         [HttpGet]
         public ActionResult Market()
         {
@@ -40,7 +40,7 @@ namespace Marketeers.Controllers
             _configuration = configuration;
         }
 
-        [Route("api/[controller]/all")]
+        [Route("/[controller]/all")]
         [HttpGet]
         public string GetAllMarkets()
         {

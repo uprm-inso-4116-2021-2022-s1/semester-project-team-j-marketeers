@@ -15,13 +15,13 @@ namespace Marketeers.Models
         public MarketModel(int id, string username, string password)
         {
             Id = id;
-            Username = username;
+            Market = username;
             Password = password;
         }
         [JsonProperty("marketid")]
         public int Id { get; set; }
         [JsonProperty("marketname")]
-        public string Username { get; set; }
+        public string Market { get; set; }
         [JsonProperty("password")]
         public string Password { get; set; }
     }
