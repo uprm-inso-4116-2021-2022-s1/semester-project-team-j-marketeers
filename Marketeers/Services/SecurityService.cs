@@ -10,17 +10,15 @@ namespace Marketeers.Services
     {
         UserDAO usersDAO = new UserDAO();
 
-        public SecurityService()
-        {
+        public SecurityService() {}
 
-        }
-
-        //Customer
+        //Customer Login
         public bool IsValid(CustomerModel user)
         {
             return usersDAO.FindUserandPass(user);
         }
 
+        //Customer Register
         public bool Verify(CustomerModel user)
         {
             return usersDAO.CheckUsername(user);

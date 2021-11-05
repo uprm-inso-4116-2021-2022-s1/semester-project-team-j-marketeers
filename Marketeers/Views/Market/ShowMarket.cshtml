@@ -10,7 +10,7 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Market)
+                @Html.DisplayNameFor(model => model.Username)
             </th>
             <th></th>
         </tr>
@@ -23,7 +23,7 @@
                     <button onclick="location.href='@Url.Action("Index","Product")'" type="button" class="btn btn-dark">Select</button>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => market.Market)
+                    @Html.DisplayFor(modelItem => market.Username)
                 </td>
             </tr>
         }

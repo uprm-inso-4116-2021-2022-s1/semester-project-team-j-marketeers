@@ -1,10 +1,10 @@
 ﻿@model Marketeers.Models.DriverModel
 
-<h4>Driver Register Model</h4>
+<h4>Driver Login Model</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Register">
+        <form method="post" asp-controller="Login" asp-action="DriverLogin">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
@@ -17,10 +17,14 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Login" class="btn btn-primary" />
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-controller="Register" asp-action="DriverIndex">Click to Register</a>
 </div>
 
 @section Scripts {

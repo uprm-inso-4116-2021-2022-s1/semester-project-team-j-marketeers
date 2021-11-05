@@ -16,7 +16,7 @@ namespace Marketeers.Services
     {
         string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
 
-        //Customer
+        //Customer Login
         public bool FindUserandPass(CustomerModel user)
         {
             bool successful = false;
@@ -56,7 +56,7 @@ namespace Marketeers.Services
             return successful;
         }
 
-        //Customer
+        //Customer Register
         public bool CheckUsername(CustomerModel user)
         {
             bool successful = false;   
@@ -188,7 +188,7 @@ namespace Marketeers.Services
                 using (NpgsqlCommand command = new NpgsqlCommand(sqlStatement, connection))
                 {
 
-                    command.Parameters.Add("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Market;
+                    command.Parameters.Add("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Username;
                     command.Parameters.Add("@password", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Password;
 
                     try
@@ -227,7 +227,7 @@ namespace Marketeers.Services
                 connection.Open();
                 using (NpgsqlCommand command = new NpgsqlCommand("SELECT COUNT(*) FROM markets WHERE marketname = @username", connection))
                 {
-                    command.Parameters.AddWithValue("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Market;
+                    command.Parameters.AddWithValue("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Username;
                     exists = (int)(long)command.ExecuteScalar() > 0;
                 }
 
@@ -242,7 +242,7 @@ namespace Marketeers.Services
                     successful = true;
                     using (NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO markets (marketname, password) VALUES (@username, @password)", connection))
                     {
-                        cmd.Parameters.AddWithValue("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Market;
+                        cmd.Parameters.AddWithValue("@username", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Username;
                         cmd.Parameters.AddWithValue("@password", (NpgsqlTypes.NpgsqlDbType)SqlDbType.VarChar, 40).Value = user.Password;
                         successful = true;
 
