@@ -14,13 +14,27 @@ namespace Marketeers.Controllers
 {
     
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrderController : Controller
     {
 
         private readonly IConfiguration _configuration;
         public OrderController(IConfiguration configuration)
         {
             _configuration = configuration;
+        }
+
+        [Route("api/[controller]/OrderSubmissionIndex")]
+        [HttpGet]
+        public IActionResult GetOrderSubmission()
+        {
+            return View("OrderSubmission");
+        }
+
+        [Route("api/[controller]/OrderConfirmationIndex")]
+        [HttpGet]
+        public IActionResult GetOrderConfirmation()
+        {
+            return View("OrderConfirmation");
         }
 
         [Route("api/[controller]/all")]

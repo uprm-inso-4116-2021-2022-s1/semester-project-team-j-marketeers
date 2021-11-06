@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\NewFolder\" />
+    <Folder Include="Views\DisplayOrder\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
