@@ -52,7 +52,7 @@ namespace Marketeers.Controllers
             }
             else
             {
-                return View("Failed", user);
+                return View("FailedForCustomer", user);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Marketeers.Controllers
             }
             else
             {
-                return View("Failed", user);
+                return View("FailedForDriver", user);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Marketeers.Controllers
             }
             else
             {
-                return View("Failed", user);
+                return View("FailedForMarket", user);
             }
         }
 

@@ -1,27 +1,48 @@
 ﻿@model Marketeers.Models.MarketModel
 
-<h4>Market Register Model</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="get" asp-controller="Register" asp-action="MarketRegister">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<header>
+    <link rel="stylesheet" href="~/css/LogAndReg.css" />
+</header>
+
+<body>
+    <div class="row">
+        <div class="col-md-2">
+            <h4 class="vertical-center">Market Register</h4>
+        </div>
     </div>
-</div>
+
+    <hr class="hr-login" style="margin-top: 2%" />
+
+    <section>
+        <div class="row">
+            <div class="col-md-5">
+                <h1>Become a Marketeer!</h1>
+                <h6>Join us today! We'll have your groceries made simple. </h6>
+            </div>
+            <div class="col-md-2">
+                <img align="left" src="/Img/buggy-surprised.svg" alt="HTML5 Icon" style="width:132px;height:132px;">
+            </div>
+            <div class="col-md-5">
+                <form method="get" asp-controller="Register" asp-action="MarketRegister">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Register" class="btn-color" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,13 +1,19 @@
 ﻿@model Marketeers.Models.CustomerModel
 
+<header>
+    <link rel="stylesheet" href="~/css/LogAndReg.css" />
+</header>
+
+<body>
     <div class="row">
-        <div class="col-md-1">
-            <h4 class="vertical-center">Login</h4>
+        <div class="col-md-2">
+            <h4 class="vertical-center">Customer Login</h4>
         </div>
     </div>
 
+    <hr class="hr-login" style="margin-top: 2%" />
 
-        <hr class="hr-login" style="margin-top: 2%" />
+    <section>
         <div class="row">
             <div class="col-md-4">
                 <h1>Welcome back 'pal</h1>
@@ -30,17 +36,17 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Login" class="btn-color"/>
+                        <input type="submit" value="Login" class="btn-color" />
                     </div>
                     <div>
-                        <p>Don't have an account? <a asp-controller="Register" asp-action="CustomerIndex">Click to Register</a></p>  
+                        <p>Don't have an account? <a asp-controller="Register" asp-action="CustomerIndex">Click to Register</a></p>
                     </div>
-                </form >
+                </form>
             </div>
         </div>
+    </section>
+</body>
 
-
-
-        @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        }
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
