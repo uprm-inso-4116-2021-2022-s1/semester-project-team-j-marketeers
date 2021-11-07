@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Marketeers.Models.OrderModel>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customerid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Driverid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marketid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in (IEnumerable<OrderModel>)TempData["orders"]) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customerid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Driverid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marketid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                <button onclick="location.href='@Url.Action("HelperTakeOrder", "Order", new {orderid = item.Id})'" type="button" class="btn btn-dark">Take</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
