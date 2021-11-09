@@ -1,40 +1,25 @@
 ﻿@model IEnumerable<Marketeers.Models.ProductModel>
-
-
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Itemname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.quantity)
-            </th>
-            <th></th>
-        </tr>
+        <h1>Products</h1>
     </thead>
     <tbody>
-        @foreach (var item in (IEnumerable<ProductModel>)TempData["product"]) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Itemname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.quantity)
-                    </td>
-                </tr>
-        }
+        <tr class="mx-3">
+            <div class="card-columns">
+                @foreach (var item in (IEnumerable<ProductModel>)TempData["product"])
+                {
+
+                    <div class="card" style="width:400px">
+                        <img class="card-img-top" src="~/Img/food-ConvertImage.jpg" alt="Card image">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">@Html.DisplayFor(modelItem => item.Itemname)</h4>
+                            <p class="card-text"><b>Price:</b> $@Html.DisplayFor(modelItem => item.price)</p>
+                            <p class="card-text"><b>Amount available:</b> @Html.DisplayFor(modelItem => item.quantity)</p>
+                            <a href="#" class="btn btn-color">Add to Cart</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </tr>
     </tbody>
 </table>
