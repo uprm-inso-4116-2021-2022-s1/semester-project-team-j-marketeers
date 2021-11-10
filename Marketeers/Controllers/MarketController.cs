@@ -19,6 +19,26 @@ namespace Marketeers.Controllers
     [ApiController]
     public class MarketController : Controller
     {
+        [Route("/[controller]/SupermarketProducts")]
+        [HttpGet]
+        public IActionResult SupermarketProducts()
+        {
+            return View("SupermarketProducts");
+        }
+
+        [Route("/[controller]/SupermarketInformation")]
+        [HttpGet]
+        public IActionResult SupermarketInfo()
+        {
+            return View("SupermarketInfo");
+        }
+        [Route("/[controller]/SupermarketOrder")]
+        [HttpGet]
+        public IActionResult SupermarketOrder()
+        {
+            return View("SupermarketOrder");
+        }
+
         [Route("/[controller]/show")]
         [HttpGet]
         public ActionResult Market()

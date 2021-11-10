@@ -1,0 +1,58 @@
+﻿@model Marketeers.Models.MarketModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>Supermarket Information</h1>
+
+<div class="card" style="width:400px">
+    <img class="card-img-top" src="~/Img/supermarket.jpg" alt="Card image">
+    <div class="card-body text-center">
+        <h4 class="card-title">@Html.DisplayFor(model => model.Id)</h4>
+        <p class="card-text"><b>Username:</b>@Html.DisplayFor(model => model.Username)</p>
+        <p class="card-text"><b>Password:</b>@Html.DisplayFor(model => model.Password)</p>
+    </div>
+</div>
+
+
+<div>
+   <p><b>Restock Products</b></p>
+   <button class="btn-color" onclick="location.href='@Url.Action("SupermarketProducts","Market")'">Add Products</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
