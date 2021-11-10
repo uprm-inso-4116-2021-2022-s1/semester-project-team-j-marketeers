@@ -1,43 +1,68 @@
 ﻿@model Marketeers.Models.CustomerModel
 
-<div class="font_setup">
-    <h5 style="text-align:center">Home</h5>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            <img src="/Img/infosheet-icon.jpg" alt="HTML5 Icon" style="width:128px;height:128px;">
-        </dt>
-        <dd class="col-sm-10">
-            <div>
-                <p><b>Your Orders</b></p>
-                <button class="btn-color" type="button" onclick="location.href='@Url.Action("Index","DisplayOrder")'">Track your order</button>
-            </div>
-        </dd>
-    </dl>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            <img src="/Img/productsIcon.png" alt="HTML5 Icon" style="width:128px;height:128px;">
-        </dt>
-        <dd class="col-sm-10">
-            @*
-        <div>
-        <p><b>Start shopping</b></p>
-        <select class="option-color" class="browser-default custom-select">
-            <option class="option-color" selected>Select Supermarket</option>
-            <option class="option-color" value="1">Econo</option>
-            <option class="option-color" value="2">Selectos</option>
-            <option class="option-color" value="3">SuperMax</option>
-        </select>
-        </div>
-            *@
-            <p><b>Start Shopping</b></p>
-            <button class="btn-color" onclick="location.href='@Url.Action("show","Market")'">Select Supermarket ></button>
-        </dd>
-    </dl>
-</div>
-<div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Carousel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
 
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+    </div>
+
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/Img/grocery-cart.jpg" class="d-block w-100" style="height: 450px; filter: blur(5px)">
+            <div class="carousel-caption">
+                <div style="background-color: rgba(0,0,0,0.5); border-radius: 15px; padding: 5px">
+                    <h1>Begin your Marketeer shopping experience now!</h1>
+                    <p> Start by selecting the market here!</p>
+                </div>
+                <a onclick="location.href='@Url.Action("show","Market")'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Img/grocery-cloth.jpg" class="d-block w-100" style="height: 450px; filter: blur(5px)">
+            <div class="carousel-caption">
+                <div style="background-color: rgba(0,0,0,0.5); border-radius: 15px; padding: 5px">
+                    <h1>Already placed your order?</h1>
+                    <p>Track your current orders here!</p>
+                </div>
+                <a onclick="location.href='@Url.Action("Index","DisplayOrder")'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+
+<div class="font_setup">
+    <hr />
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-2">
+                    <div class="p-5">
+                        <img src="~/Img/food-icon.svg" style="width:400px;height:400px;" />
+                    </div>
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <div class="p-5">
+                        <h2 class="display-4">Welcome Marketeer!</h2>
+                        <p>We're glad to have you here! In the screen above you can select any of the options available. You are our priority so here at Marketeers we are pleased to give you an easy-breezy way to access the things you need!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
