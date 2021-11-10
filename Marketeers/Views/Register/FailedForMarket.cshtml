@@ -1,13 +1,23 @@
 ﻿@model Marketeers.Models.MarketModel
 
-<div>
-    <h4>Failed To Register</h4>
-    <hr />
+<header>
+    <link rel="stylesheet" href="~/css/LogAndReg.css" />
+</header>
+
+<div class="row">
+    <div class="col-md-2">
+        <h4 class="vertical-center">Failed To Register</h4>
+    </div>
+</div>
+
+<hr style="margin-top: 2%" />
+
+<section>
     <dl class="row">
-        Username Already Exist
+        Username or Password is Inadequate or the Username is Already in Use
     </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-controller="Home" asp-action="Index">Home Page</a> |
+        <a asp-controller="Register" asp-action="MarketIndex">Back to Register</a>
+    </div>
+</section>
