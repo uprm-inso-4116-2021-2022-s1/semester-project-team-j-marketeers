@@ -5,27 +5,22 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th></th>
-        </tr>
     </thead>
     <tbody>
-        @foreach (var market in (IEnumerable<MarketModel>)TempData["market"])
-        {
-            <tr>
-                <td>
-                    <button onclick="location.href='@Url.Action(market.Id.ToString(),"Market")'" type="button" class="btn btn-dark">Select</button>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => market.Username)
-                </td>
-            </tr>
-        }
+        <tr class="mx-3">
+            <div class="card-columns">
+                @foreach (var market in (IEnumerable<MarketModel>)TempData["market"])
+                {
+                    <div class="card" style="width:400px">
+                        <img class="card-img-top" src="~/Img/supermarket.jpg" alt="Card image">
+                        <div class="card-body text-center">
+                            <h4 class="card-title"> @Html.DisplayFor(modelItem => market.Username)</h4>
+
+                            <button onclick="location.href='@Url.Action(market.Id.ToString(),"Market")'" type="button" class="btn btn-dark">Select</button>
+                            
+                        </div>
+                    </div>
+                }
+</tr>
     </tbody>
 </table>

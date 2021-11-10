@@ -8,18 +8,44 @@
             <div class="card-columns">
                 @foreach (var item in (IEnumerable<ProductModel>)TempData["product"])
                 {
+                    var quantity = 0;
 
+                        int addOne(int quantity)
+                        {
+                            return quantity += 1;
+                        }
+                        int minusOne(int quantity)
+                        {
+                            return quantity -= 1;
+                        }
+                    
                     <div class="card" style="width:400px">
                         <img class="card-img-top" src="~/Img/food-ConvertImage.jpg" alt="Card image">
                         <div class="card-body text-center">
                             <h4 class="card-title">@Html.DisplayFor(modelItem => item.Itemname)</h4>
                             <p class="card-text"><b>Price:</b> $@Html.DisplayFor(modelItem => item.price)</p>
                             <p class="card-text"><b>Amount available:</b> @Html.DisplayFor(modelItem => item.quantity)</p>
-                            <a href="#" class="btn btn-color">Add to Cart</a>
+
+                            <p> Quantity </p>
+                                <div class="row input-group center">
+                                    <a href="#" class="btn btn-color" style="font-size: 13px; width:50px; margin-right: 5px">Add</a>
+                                    <input type="number" id="quantity" name="quantity" min="0" max="@item.quantity">
+                                </div>
                         </div>
                     </div>
+
+                    <script>
+                        function increment() {
+                            document.getElementById("quant").stepUp();
+                        }
+                        function decrement() {
+                            document.getElementById("quant").stepDown();
+                        }
+                    </script>
                 }
             </div>
         </tr>
     </tbody>
 </table>
+
+
