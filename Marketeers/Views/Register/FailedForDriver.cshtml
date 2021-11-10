@@ -4,20 +4,18 @@
     <link rel="stylesheet" href="~/css/LogAndReg.css" />
 </header>
 
-<div class="row">
-    <div class="col-md-2">
-        <h4 class="vertical-center">Failed To Register</h4>
+<div class="container" id="rcorners">
+    <div class="card text-center">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Failed To Register</h5>
+            <p class="card-text">Username or Password is Inadequate or the Username is Already in Use</p>
+            <a class="btn-color-wider" asp-controller="Home" asp-action="Index">Home Page</a> |
+            <a class="btn-color-wider" asp-controller="Register" asp-action="DriverIndex">Back to Register</a>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
     </div>
 </div>
 
-<hr style="margin-top: 2%" />
-
-<section>
-    <dl class="row">
-        Username or Password is Inadequate or the Username is Already in Use
-    </dl>
-    <div>
-        <a asp-controller="Home" asp-action="Index">Home Page</a> |
-        <a asp-controller="Register" asp-action="DriverIndex">Back to Register</a>
-    </div>
-</section>

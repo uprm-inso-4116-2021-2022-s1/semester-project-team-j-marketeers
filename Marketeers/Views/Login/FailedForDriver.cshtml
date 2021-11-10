@@ -4,20 +4,17 @@
     <link rel="stylesheet" href="~/css/LogAndReg.css" />
 </header>
 
-<div class="row">
-    <div class="col-md-2">
-        <h4 class="vertical-center">Failed To Login</h4>
+<div class="container" id="rcorners">
+    <div class="card text-center">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Failed To Login</h5>
+            <p class="card-text">Username or Password is Incorrect</p>
+            <a class="btn-color-wider" asp-controller="Home" asp-action="Index">Home Page</a> |
+            <a class="btn-color-wider" asp-controller="Login" asp-action="DriverIndex">Back to Login</a>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
     </div>
 </div>
-
-<hr style="margin-top: 2%" />
-
-<section>
-    <dl class="row">
-        Username or Password is Wrong
-    </dl>
-    <div>
-        <a asp-controller="Home" asp-action="Index">Home Page</a> |
-        <a asp-controller="Login" asp-action="DriverIndex">Back to Login</a>
-    </div>
-</section>
