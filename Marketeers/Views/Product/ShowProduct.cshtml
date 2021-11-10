@@ -27,10 +27,10 @@
                             <p class="card-text"><b>Amount available:</b> @Html.DisplayFor(modelItem => item.quantity)</p>
 
                             <p> Quantity </p>
-                                <div class="row input-group center">
-                                    <a href="#" class="btn btn-color" style="font-size: 13px; width:50px; margin-right: 5px">Add</a>
-                                    <input type="number" id="quantity" name="quantity" min="0" max="@item.quantity">
-                                </div>
+                            <div class="input-group mb-3 center">
+                                <button href="#" class="btn btn-outline-secondary" style="font-size: 13px; width:50px; margin-right: 5px">Add</button>
+                                <input type="number" id="quantity" name="quantity" min="0" max="@item.quantity">
+                            </div>
                         </div>
                     </div>
 
