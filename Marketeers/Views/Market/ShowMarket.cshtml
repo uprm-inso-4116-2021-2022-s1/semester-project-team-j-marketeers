@@ -3,24 +3,30 @@
     ViewBag.Title = "Market List";
 }
 
-<table class="table">
-    <thead>
-    </thead>
-    <tbody>
-        <tr class="mx-3">
-            <div class="card-columns">
-                @foreach (var market in (IEnumerable<MarketModel>)TempData["market"])
-                {
-                    <div class="card" style="width:400px">
-                        <img class="card-img-top" src="~/Img/supermarket.jpg" alt="Card image">
-                        <div class="card-body text-center">
-                            <h4 class="card-title"> @Html.DisplayFor(modelItem => market.Username)</h4>
-
-                            <button onclick="location.href='@Url.Action(market.Id.ToString(),"Market")'" type="button" class="btn btn-dark">Select</button>
-                            
+<header>
+    <link rel="stylesheet" href="~/css/LogAndReg.css" />
+</header>
+<section  class="market-container">
+    <table class="table">
+        <thead>
+            <h3 style="text-align:center">Available Markets</h3>
+        </thead>
+        <hr />
+        <tbody>
+            <tr class="mx-3">
+                <div class="card-columns">
+                    @foreach (var market in (IEnumerable<MarketModel>)TempData["market"])
+                    {
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="~/Img/supermarket.jpg" alt="Card image">
+                            <div class="card-body text-center">
+                                <h4 class="card-title"> @Html.DisplayFor(modelItem => market.Username)</h4>
+                                <button onclick="location.href='@Url.Action(market.Id.ToString(),"Market")'" type="button" class="btn btn-dark">Select</button>
+                            </div>
                         </div>
-                    </div>
-                }
-</tr>
-    </tbody>
-</table>
+                    }
+                </div>
+            </tr>
+        </tbody>
+    </table>
+</section>
