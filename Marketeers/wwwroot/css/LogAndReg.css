@@ -1,10 +1,10 @@
-﻿ section{
-     margin: 40px;
+﻿section {
+    margin: 40px;
 }
 
- .row{
-     padding: 10px;
- }
+.row {
+    padding: 10px;
+}
 
 .btn-color-wider {
     border-radius: 5px;
@@ -14,6 +14,7 @@
     background-color: black;
 }
 
+/* Failed */
 #rcorners {
     border-radius: 45px;
     border: 2px solid #000000;
@@ -21,4 +22,15 @@
     padding: 20px;
     width: 800px;
     height: 240px;
+}
+
+/* Show Market */
+.market-container {
+    margin: 20px;
+    padding-left: 30px;
+    padding-bottom: 40px;
+}
+
+#num-input-center {
+    padding-left: 40%;
 }
