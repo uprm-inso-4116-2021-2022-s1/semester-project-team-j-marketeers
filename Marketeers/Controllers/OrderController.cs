@@ -67,7 +67,7 @@ namespace Marketeers.Controllers
             return View("OrderSubmission");
         }
 
-        [Route("api/[controller]/OrderConfirmationIndex")]
+        [Route("/[controller]/OrderConfirmationIndex")]
         [HttpGet]
         public IActionResult GetOrderConfirmation()
         {
