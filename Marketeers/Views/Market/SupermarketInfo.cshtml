@@ -5,22 +5,43 @@
 }
 
 <h1>Supermarket Information</h1>
-
-<div class="card" style="width:400px">
-    <img class="card-img-top" src="~/Img/supermarket.jpg" alt="Card image">
-    <div class="card-body text-center">
-        <h4 class="card-title">@Html.DisplayFor(model => model.Id)</h4>
-        <p class="card-text"><b>Username:</b>@Html.DisplayFor(model => model.Username)</p>
-        <p class="card-text"><b>Password:</b>@Html.DisplayFor(model => model.Password)</p>
+<hr />
+<div class="container mx-auto mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="new-card" style="width: 18rem;" >
+                <img src="~/Img/profile-icon-png-removebg-preview.png" style="width:200px; height:200px" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: black">Username</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Display your market's name.</h6>
+                    <p class="card-text" style="color: black"><b>Username:</b>@Html.DisplayFor(model => model.Username)</p>
+                    <input type="submit" value="Edit" class="btn-color" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="new-card" style="width: 18rem;">
+                <img src="~/Img/padlock.png" style="width:200px; height:200px" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: black">Password</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Keep your account secure.</h6>
+                    <p class="card-text" style="color: black"><b>Password:</b>@Html.DisplayFor(model => model.Password)</p>
+                    <input type="submit" value="Edit" class="btn-color" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="new-card" style="width: 18rem;">
+                <img src="~/Img/maps-icon-8225.png"  style="width:200px; height:200px" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: black">Location</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Make sure your customers can find you!</h6>
+                    <p class="card-text" style="color: black">Location: PR 2 PR-4494, Isabela, Puerto Rico, 00662</p>
+                    <input type="submit" value="Edit" class="btn-color" />
+            </div>
+        </div>
     </div>
 </div>
-
-
-<div>
-   <p><b>Restock Products</b></p>
-   <button class="btn-color" onclick="location.href='@Url.Action("SupermarketProducts","Market")'">Add Products</button>
-</div>
-
 
 
 
