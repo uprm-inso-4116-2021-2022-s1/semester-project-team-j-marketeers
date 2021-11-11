@@ -5,6 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Properties\NewFolder\**" />
+    <Compile Remove="Views\DisplayOrder\**" />
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove="Properties\NewFolder\**" />
+    <Content Remove="Views\DisplayOrder\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="Properties\NewFolder\**" />
+    <EmbeddedResource Remove="Views\DisplayOrder\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove="Properties\NewFolder\**" />
+    <None Remove="Views\DisplayOrder\**" />
+    <None Remove="wwwroot\NewFolder\**" />
+    <_WebToolingArtifacts Remove="Properties\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Npgsql" Version="5.0.10" />
@@ -16,12 +32,6 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\NewFolder\" />
-    <Folder Include="Views\DisplayOrder\" />
-    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
 </Project>
