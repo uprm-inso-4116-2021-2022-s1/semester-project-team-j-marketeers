@@ -13,8 +13,8 @@ namespace Marketeers.Controllers
 {
     public class ProductController : Controller
     {
-        // Customer POV
-        [Route("/[controller]/show")]
+        // Not sure where to use it XD
+        [Route("/[controller]/showall")]
         [HttpGet]
         public ActionResult ProductAll()
         {
@@ -24,8 +24,9 @@ namespace Marketeers.Controllers
             return View("ShowProduct");
         }
 
+        // Customer POV
         // GET: ProductController/1
-        [Route("/[controller]/{marketid}")]
+        [Route("/[controller]/show")]
         [HttpGet]
         public ActionResult Product(int marketid)
         {
@@ -36,7 +37,7 @@ namespace Marketeers.Controllers
         }
 
         //Market Method
-        [Route("/[controller]/{marketid}/sell")]
+        [Route("/[controller]/stock")]
         [HttpGet]
         public ActionResult ProductFromMarket(int marketid)
         {

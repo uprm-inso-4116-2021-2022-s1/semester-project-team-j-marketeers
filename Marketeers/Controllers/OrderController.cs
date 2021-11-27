@@ -68,15 +68,17 @@ namespace Marketeers.Controllers
             return View("OrderSubmission");
         }
 
-        [Route("/[controller]/OrderConfirmationIndex")]
+        [Route("/[controller]/orderstatus")]
         [HttpGet]
-        public IActionResult GetOrderConfirmation()
+        public IActionResult GetOrderStatus(int customerid)
         {
-            return View("OrderConfirmation");
+            string json = GetAllOrdersFromCustomer(customerid);
+            List<OrderModel> orderfromcustomer = JsonConvert.DeserializeObject<List<OrderModel>>(json);
+            TempData["orderfromcustomer"] = orderfromcustomer;
+            return View("OrderStatus");
         }
 
         //Market POV
-
         //Get: All Order
         [Route("/[controller]/orderfrommarket")]
         [HttpGet]
@@ -184,7 +186,7 @@ namespace Marketeers.Controllers
             return JsonConvert.SerializeObject(table);
         }
 
-        [Route("api/[controller]/customer/{driverid}")]
+        [Route("api/[controller]/driver/{driverid}")]
         [HttpGet]
         public string GetAllOrdersFromDriver(int driverid)
         {
