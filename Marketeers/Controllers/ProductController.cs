@@ -13,7 +13,16 @@ namespace Marketeers.Controllers
 {
     public class ProductController : Controller
     {
-        //Customer Method
+        // Customer POV
+        [Route("/[controller]/show")]
+        [HttpGet]
+        public ActionResult ProductAll()
+        {
+            string json = GetAllProducts();
+            List<ProductModel> products = JsonConvert.DeserializeObject<List<ProductModel>>(json);
+            TempData["product"] = products;
+            return View("ShowProduct");
+        }
 
         // GET: ProductController/1
         [Route("/[controller]/{marketid}")]
@@ -26,16 +35,19 @@ namespace Marketeers.Controllers
             return View("ShowProduct");
         }
 
-        //Supermarket Method
+        //Market Method
+        [Route("/[controller]/{marketid}/sell")]
+        [HttpGet]
+        public ActionResult ProductFromMarket(int marketid)
+        {
+            string json = GetProductsFromMarket(marketid) ;
+            List<ProductModel> productsfrommarket = JsonConvert.DeserializeObject<List<ProductModel>>(json);
+            TempData["productfrommarket"] = productsfrommarket;
+            return View("ShowProductFromMarket");
+        }
 
         // GET: ProductController/Create
         public ActionResult Create()
-        {
-            return View();
-        }
-
-        // GET: ProductController/Details/5
-        public ActionResult Details(int id)
         {
             return View();
         }
@@ -177,16 +189,5 @@ namespace Marketeers.Controllers
             }
             return JsonConvert.SerializeObject(table);
         }
-
-        [Route("/[controller]/show")]
-        [HttpGet]
-        public ActionResult ProductAll()
-        {
-            string json = GetAllProducts();
-            List<ProductModel> products = JsonConvert.DeserializeObject<List<ProductModel>>(json);
-            TempData["product"] = products;
-            return View("ShowProduct");
-        }
-
     }
 }

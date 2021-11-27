@@ -18,5 +18,16 @@ namespace Marketeers.Models
         public int Marketid { get; set; }
         [JsonProperty("location")]
         public string Location { get; set; }
+
+        [JsonProperty("productid")]// Added
+        public int Productid { get; set; }
+        [JsonProperty("itemid")]// Added
+        public int Itemid { get; set; }
+        [JsonProperty("itemname")]// Added
+        public string Itemname { get; set; }
+        [JsonProperty("price")]// Added
+        public float Price { get; set; }
+        [JsonProperty("quantity")]// Added
+        public int Quantity { get; set; }
     }
 }

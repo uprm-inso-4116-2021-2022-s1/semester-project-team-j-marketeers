@@ -29,7 +29,7 @@
                         <h1>Need to verify your orders?</h1>
                         <p>Check your current orders!</p>
                     </div>
-                    <a onclick="location.href='@Url.Action("SupermarketOrder","Market")'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
+                    <a onclick="location.href='@Url.Action("OrderFromMarket","Order", new {marketid = Model.Id})'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 <div class="col-lg-6 order-lg-2" style="text-align: center; background-color: rgba(0,0,0,0.5); border-radius: 15px; padding: 2px">
                     <div class="p-5">
                         <h2 style="color:white"><b>Yes, your products matter too.</b></h2>
-                        <a onclick="location.href='@Url.Action("SupermarketProducts","Market")'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">RESTOCK PRODUCTS</a>
+                        <a onclick="location.href='@Url.Action("ProductFromMarket","Product", new {marketid = Model.Id})'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">RESTOCK PRODUCTS</a>
                     </div>
                 </div>
                 <div class="col-lg-6 order-lg-1">

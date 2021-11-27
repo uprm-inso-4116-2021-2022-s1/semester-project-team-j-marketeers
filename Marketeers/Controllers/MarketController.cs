@@ -19,6 +19,9 @@ namespace Marketeers.Controllers
     [ApiController]
     public class MarketController : Controller
     {
+        //Market POV
+
+        //Restock Product 
         [Route("/[controller]/SupermarketProducts")]
         [HttpGet]
         public IActionResult SupermarketProducts()
@@ -26,19 +29,15 @@ namespace Marketeers.Controllers
             return View("SupermarketProducts");
         }
 
+        //Infomation
         [Route("/[controller]/SupermarketInformation")]
         [HttpGet]
         public IActionResult SupermarketInfo()
         {
             return View("SupermarketInfo");
         }
-        [Route("/[controller]/SupermarketOrder")]
-        [HttpGet]
-        public IActionResult SupermarketOrder()
-        {
-            return View("SupermarketOrder");
-        }
 
+        //Customer POV
         [Route("/[controller]/show")]
         [HttpGet]
         public ActionResult Market()
@@ -110,8 +109,5 @@ namespace Marketeers.Controllers
             }
             return JsonConvert.SerializeObject(table);
         }
-
-
-        
     }
 }

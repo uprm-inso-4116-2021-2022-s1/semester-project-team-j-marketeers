@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Marketeers.Models.OrderModel>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Productid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Itemid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marketid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Itemname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (IEnumerable<OrderModel>)TempData["showitems"])
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Productid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Itemid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marketid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Itemname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+            </tr>
+            <div>
+                <button onclick="location.href='@Url.Action("HelperReadyOrder", "Order", new { orderid = item.Id })'" type="button" class="btn btn-dark">Ready</button>
+            </div>
+        }
+    </tbody>
+</table>
