@@ -29,5 +29,9 @@ namespace Marketeers.Models
         public float Price { get; set; }
         [JsonProperty("quantity")]// Added
         public int Quantity { get; set; }
+        [JsonProperty("complete")]// Added
+        public bool Complete { get; set; }
+        [JsonProperty("ready")]// Added
+        public bool Ready { get; set; }
     }
 }
