@@ -35,9 +35,9 @@ namespace Marketeers.Controllers
         //Get: All Order
         [Route("/[controller]/orderfromdriver")]
         [HttpGet]
-        public ActionResult OrderFromDriver()
+        public ActionResult OrderFromDriver(int driverid)
         {
-            string json = GetAllOrdersFromDriver(4);
+            string json = GetAllOrdersFromDriver(driverid);
             List<OrderModel> orderfromdriver = JsonConvert.DeserializeObject<List<OrderModel>>(json);
             TempData["orderfromdriver"] = orderfromdriver;
             return View("OrderFromDriver");

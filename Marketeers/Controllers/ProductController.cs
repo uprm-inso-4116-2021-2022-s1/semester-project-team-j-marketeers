@@ -47,25 +47,27 @@ namespace Marketeers.Controllers
             return View("ShowProductFromMarket");
         }
 
-        // GET: ProductController/Create
-        public ActionResult Create()
+        [Route("/[controller]/SupermarketProducts")]
+        [HttpGet]
+        public IActionResult SupermarketProducts(int marketid)
         {
-            return View();
+            return View("AddProduct");
         }
 
-        // POST: ProductController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //Restock Product 
+        [Route("/[controller]/restock")]
+        [HttpGet]
+        public IActionResult RestockProducts(ProductModel product)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            AddProduct(product);
+            return RedirectToAction("ProductFromMarket", "Product", new {marketid = product.Marketid});
+        }
+
+        // GET: ProductController/Delete/5
+        public ActionResult Delete(int productid, int marketid)
+        {
+            RemoveProduct(productid);
+            return RedirectToAction("ProductFromMarket", "Product", new { marketid = marketid });
         }
 
         // GET: ProductController/Edit/5
@@ -74,41 +76,6 @@ namespace Marketeers.Controllers
             return View();
         }
 
-        // POST: ProductController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         //Back-End Method API
         [Route("/[controller]/all")]

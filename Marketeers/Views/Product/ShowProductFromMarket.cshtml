@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<Marketeers.Models.ProductModel>
 
-<p>
-    <a asp-controller= "Market" asp-action="SupermarketProducts">Add</a>
-</p>
 
 <table class="table">
     <thead>
@@ -26,28 +23,34 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in (IEnumerable<ProductModel>)TempData["productfrommarket"]) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Itemname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Marketid)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-}
+        @foreach (var item in (IEnumerable<ProductModel>)TempData["productfrommarket"])
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Itemname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marketid)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { productid = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { productid = item.Id, marketid = item.Marketid})
+                </td>
+            </tr>
+
+            @* Need to be fix it creating multiple button :C *@
+            <div class="form-group">
+                <button onclick="location.href='@Url.Action("SupermarketProducts", "Product", new { marketid = item.Marketid })'" type="button" class="btn btn-dark">Add</button>
+            </div>
+        }
     </tbody>
 </table>

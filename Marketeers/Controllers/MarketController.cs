@@ -21,14 +21,6 @@ namespace Marketeers.Controllers
     {
         //Market POV
 
-        //Restock Product 
-        [Route("/[controller]/SupermarketProducts")]
-        [HttpGet]
-        public IActionResult SupermarketProducts()
-        {
-            return View("SupermarketProducts");
-        }
-
         //Infomation
         [Route("/[controller]/SupermarketInformation")]
         [HttpGet]
