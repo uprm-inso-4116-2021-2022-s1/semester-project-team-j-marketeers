@@ -30,8 +30,9 @@ namespace Marketeers.Controllers
         //Customer POV
         [Route("/[controller]/showmarket")]
         [HttpGet]
-        public ActionResult ShowMarket()
+        public ActionResult ShowMarket(int customerid)
         {
+            ViewBag.CustomerID = customerid;
             string json = GetAllMarkets();
             List<MarketModel> markets = JsonConvert.DeserializeObject<List<MarketModel>>(json);
             TempData["market"] = markets;

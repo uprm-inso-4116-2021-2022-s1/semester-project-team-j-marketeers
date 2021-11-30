@@ -20,7 +20,7 @@
                             <img class="card-img-top" src="~/Img/supermarket.jpg" alt="Card image">
                             <div class="card-body text-center">
                                 <h4 class="card-title"> @Html.DisplayFor(modelItem => market.Username)</h4>
-                                <button onclick="location.href='@Url.Action("ProductFromCustomer", "Product", new { marketid = market.Id})'" type="button" class="btn btn-dark">Select</button>
+                                <button onclick="location.href='@Url.Action("ProductFromCustomer", "Product", new { marketid = market.Id , customerid = @ViewBag.CustomerID })'" type="button" class="btn btn-dark">Select</button>
                             </div>
                         </div>
                     }

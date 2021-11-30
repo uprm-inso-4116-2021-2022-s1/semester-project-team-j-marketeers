@@ -35,7 +35,7 @@
                             <p> Quantity </p>
                             <div class="input-group mb-3 center">
                                 <input type="number" id="quantity" name="quantity" min="0" max="@item.quantity">
-                                <button onclick="location.href='@Url.Action("GetOrderSubmission", "Order", new { productid = item.Id, marketid = item.Marketid })'" type="button" class="btn btn-dark">Add</button>
+                                <button onclick="location.href='@Url.Action("GetOrderSubmission", "Order", new { productid = item.Id, marketid = item.Marketid, customerid = @ViewBag.CustomerID })'" type="button" class="btn btn-dark">Add</button>
                             </div>
                         </div>
                     </div>

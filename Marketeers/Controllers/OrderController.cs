@@ -28,7 +28,7 @@ namespace Marketeers.Controllers
 
         [Route("/[controller]/ordersubmission")]
         [HttpGet]
-        public ActionResult GetOrderSubmission(int marketid, int productid)
+        public ActionResult GetOrderSubmission(int customerid, int marketid, int productid)
         {
             return View("OrderSubmission");
         }
