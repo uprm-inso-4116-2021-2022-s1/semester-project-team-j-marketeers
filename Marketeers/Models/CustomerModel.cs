@@ -9,7 +9,7 @@ namespace Marketeers.Models
     public class CustomerModel
     {
         [JsonProperty("customerid")]
-        public int Id { get; set; }
+        public int Customerid { get; set; }
         [JsonProperty("customername")]
         public string Username { get; set; }
         [JsonProperty("password")]

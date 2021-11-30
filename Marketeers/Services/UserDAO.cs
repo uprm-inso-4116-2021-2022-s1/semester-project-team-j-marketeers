@@ -39,7 +39,7 @@ namespace Marketeers.Services
                         {
                             table.Load(reader);
                             successful = true;
-                            user.Id = Convert.ToInt32(table.Rows[0][0].ToString());
+                            user.Customerid = Convert.ToInt32(table.Rows[0][0].ToString());
                         }
                         reader.Close();
                     }

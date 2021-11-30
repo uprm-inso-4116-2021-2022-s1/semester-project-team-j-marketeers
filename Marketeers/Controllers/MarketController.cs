@@ -20,8 +20,6 @@ namespace Marketeers.Controllers
     public class MarketController : Controller
     {
         //Market POV
-
-        //Infomation
         [Route("/[controller]/SupermarketInformation")]
         [HttpGet]
         public IActionResult SupermarketInfo()
@@ -30,9 +28,9 @@ namespace Marketeers.Controllers
         }
 
         //Customer POV
-        [Route("/[controller]/show")]
+        [Route("/[controller]/showmarket")]
         [HttpGet]
-        public ActionResult Market()
+        public ActionResult ShowMarket()
         {
             string json = GetAllMarkets();
             List<MarketModel> markets = JsonConvert.DeserializeObject<List<MarketModel>>(json);
@@ -40,12 +38,12 @@ namespace Marketeers.Controllers
             return View("ShowMarket");
         }
 
+        //Do Not Remember For What This Is For :C
         [Route("/[controller]/{marketid}")]
         [HttpGet]
         public ActionResult MarketToProduct(int marketid)
         {
-            string id = marketid.ToString();
-            return RedirectToAction(id, "Product");
+            return RedirectToAction(marketid.ToString(), "Product");
         }
 
         //Back-End Method API

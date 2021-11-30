@@ -15,10 +15,32 @@ namespace Marketeers.Controllers
     [ApiController]
     public class OrderController : Controller
     {
-        private readonly IConfiguration _configuration;
-        public OrderController(IConfiguration configuration)
+        //Customer POV
+        [Route("/[controller]/orderstatus")]
+        [HttpGet]
+        public IActionResult GetOrderStatus(int customerid)
         {
-            _configuration = configuration;
+            string json = GetAllOrdersFromCustomer(customerid);
+            List<OrderModel> orderfromcustomer = JsonConvert.DeserializeObject<List<OrderModel>>(json);
+            TempData["orderfromcustomer"] = orderfromcustomer;
+            return View("OrderStatus");
+        }
+
+        [Route("/[controller]/ordersubmission")]
+        [HttpGet]
+        public ActionResult GetOrderSubmission(int marketid, int productid)
+        {
+            return View("OrderSubmission");
+        }
+
+        [Route("/[controller]/makeorder")]
+        [HttpPost]
+        public IActionResult MakeOrder([FromForm] OrderModel order)
+        {
+            string json = AddOrder(order);
+            List <OrderModel> orderid = JsonConvert.DeserializeObject<List<OrderModel>>(json);
+            AddItemToOrder(order.Productid, orderid.First().Id);
+            return RedirectToAction("GetOrderStatus", "Order", new { customerid = order.Customerid });
         }
 
         //Driver POV
@@ -46,9 +68,9 @@ namespace Marketeers.Controllers
         //ACTION: Accept/Take and Complete Order
         [Route("/[controller]/{orderid}/take")]
         [HttpGet]
-        public ActionResult HelperTakeOrder(int orderid)
+        public ActionResult HelperTakeOrder(int orderid, int driverid)
         {
-            TakeOrder(orderid, 4);
+            TakeOrder(orderid, driverid);
             return RedirectToAction("OrderFromDriver","Order");
         }
 
@@ -58,24 +80,6 @@ namespace Marketeers.Controllers
         {
             CompleteOrderStatus(orderid);
             return RedirectToAction("OrderFromDriver", "Order");
-        }
-
-        //Submission And Confirmation
-        [Route("/[controller]/OrderSubmissionIndex")]
-        [HttpGet]
-        public IActionResult GetOrderSubmission()
-        {
-            return View("OrderSubmission");
-        }
-
-        [Route("/[controller]/orderstatus")]
-        [HttpGet]
-        public IActionResult GetOrderStatus(int customerid)
-        {
-            string json = GetAllOrdersFromCustomer(customerid);
-            List<OrderModel> orderfromcustomer = JsonConvert.DeserializeObject<List<OrderModel>>(json);
-            TempData["orderfromcustomer"] = orderfromcustomer;
-            return View("OrderStatus");
         }
 
         //Market POV
@@ -109,6 +113,7 @@ namespace Marketeers.Controllers
             return RedirectToAction("OrderFromMarket", "Order");
         }
 
+        //Back-End Method API
         [Route("api/[controller]/all")]
         [HttpGet]
         public string GetAllOrders()
@@ -241,7 +246,7 @@ namespace Marketeers.Controllers
         [HttpPost]
         public string AddOrder(OrderModel order)
         {
-            string query = @"insert into orders(customerid, marketid, location) values(@customerid, @marketid, @location)";
+            string query = @"insert into orders(customerid, marketid, location) values(@customerid, @marketid, @location) returning orderid";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -261,12 +266,12 @@ namespace Marketeers.Controllers
                     myCon.Close();
                 }
             }
-            return JsonConvert.SerializeObject("Order is added");
+            return JsonConvert.SerializeObject(table);
         }
 
-        [Route("api/[controller]/add")]
+        [Route("api/[controller]/additem")]
         [HttpPost]
-        public string AddItemToOrder(OrderedItemModel item)
+        public string AddItemToOrder(int productid, int orderid)
         {
             string query = @"insert into items(productid, orderid) values(@productid, @orderid)";
 
@@ -279,8 +284,8 @@ namespace Marketeers.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@productid", item.Productid);
-                    myCommand.Parameters.AddWithValue("@orderid", item.Orderid);
+                    myCommand.Parameters.AddWithValue("@productid", productid);
+                    myCommand.Parameters.AddWithValue("@orderid", orderid);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();

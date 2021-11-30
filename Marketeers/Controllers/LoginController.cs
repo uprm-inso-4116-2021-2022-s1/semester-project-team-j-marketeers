@@ -15,7 +15,7 @@ namespace Marketeers.Controllers
 {
     public class LoginController : Controller
     {
-        //CustomerIndex
+        //Customer POV
         [Route("/[controller]/CustomerIndex")]
         [HttpGet]
         public IActionResult CustomerIndex()
@@ -23,23 +23,6 @@ namespace Marketeers.Controllers
             return View("CustomerLogin");
         }
 
-        //DriverIndex
-        [Route("/[controller]/DriverIndex")]
-        [HttpGet]
-        public IActionResult DriverIndex()
-        {
-            return View("DriverLogin");
-        }
-
-        //MarketIndex
-        [Route("/[controller]/MarketIndex")]
-        [HttpGet]
-        public IActionResult MarketIndex()
-        {
-            return View("MarketLogin");
-        }
-
-        //Customer
         [Route("/[controller]/CustomerLogin")]
         [HttpPost]
         public IActionResult CustomerLogin(CustomerModel user)
@@ -56,7 +39,22 @@ namespace Marketeers.Controllers
             }
         }
 
-        //Driver
+        [Route("/[controller]/{customerid}")]
+        [HttpGet]
+        public IActionResult GetId(int customerid)
+        {
+            GetCustomerId(customerid);
+            return RedirectToAction("GetOrderSubmission", "Order", new { customerid = customerid });
+        }
+
+        //Driver POV
+        [Route("/[controller]/DriverIndex")]
+        [HttpGet]
+        public IActionResult DriverIndex()
+        {
+            return View("DriverLogin");
+        }
+
         [Route("/[controller]/DriverLogin")]
         [HttpPost]
         public IActionResult DriverLogin(DriverModel user)
@@ -72,7 +70,14 @@ namespace Marketeers.Controllers
             }
         }
 
-        //Market
+        //Market POV
+        [Route("/[controller]/MarketIndex")]
+        [HttpGet]
+        public IActionResult MarketIndex()
+        {
+            return View("MarketLogin");
+        }
+
         [Route("/[controller]/MarketLogin")]
         [HttpPost]
         public IActionResult MarketLogin(MarketModel user)
@@ -99,7 +104,7 @@ namespace Marketeers.Controllers
         //Back-End Method API
         string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
 
-        [Route("/[controller]/{customerid}")]
+        [Route("api/[controller]/{customerid}")]
         [HttpGet]
         public string GetCustomerId(int customerid)
         {

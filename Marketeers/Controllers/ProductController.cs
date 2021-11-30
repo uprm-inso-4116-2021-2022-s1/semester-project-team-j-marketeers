@@ -13,7 +13,7 @@ namespace Marketeers.Controllers
 {
     public class ProductController : Controller
     {
-        // Not sure where to use it XD
+        //Future: shopping cart maybe
         [Route("/[controller]/showall")]
         [HttpGet]
         public ActionResult ProductAll()
@@ -25,10 +25,9 @@ namespace Marketeers.Controllers
         }
 
         // Customer POV
-        // GET: ProductController/1
-        [Route("/[controller]/show")]
+        [Route("/[controller]/showproduct")]
         [HttpGet]
-        public ActionResult Product(int marketid)
+        public ActionResult ProductFromCustomer(int marketid, int customerid)
         {
             string json = GetProductsFromMarket(marketid);
             List<ProductModel> products = JsonConvert.DeserializeObject<List<ProductModel>>(json);
@@ -36,7 +35,7 @@ namespace Marketeers.Controllers
             return View("ShowProduct");
         }
 
-        //Market Method
+        // Market POV
         [Route("/[controller]/stock")]
         [HttpGet]
         public ActionResult ProductFromMarket(int marketid)
@@ -54,7 +53,7 @@ namespace Marketeers.Controllers
             return View("AddProduct");
         }
 
-        //Restock Product 
+        // Modify Product
         [Route("/[controller]/restock")]
         [HttpGet]
         public IActionResult RestockProducts(ProductModel product)
@@ -63,22 +62,24 @@ namespace Marketeers.Controllers
             return RedirectToAction("ProductFromMarket", "Product", new {marketid = product.Marketid});
         }
 
-        // GET: ProductController/Delete/5
+        [Route("/[controller]/delete")]
+        [HttpGet]
         public ActionResult Delete(int productid, int marketid)
         {
             RemoveProduct(productid);
             return RedirectToAction("ProductFromMarket", "Product", new { marketid = marketid });
         }
 
-        // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
+        [Route("/[controller]/edit")]
+        [HttpGet]
+        public ActionResult Edit(int productid)
         {
             return View();
         }
 
 
         //Back-End Method API
-        [Route("/[controller]/all")]
+        [Route("api/[controller]/all")]
         [HttpGet]
         public string GetAllProducts()
         {

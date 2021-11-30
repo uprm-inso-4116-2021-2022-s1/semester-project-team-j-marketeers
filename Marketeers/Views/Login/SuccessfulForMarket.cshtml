@@ -19,7 +19,7 @@
                         <h1>Having the right information is very important.</h1>
                         <p>You can verify your market information here!</p>
                     </div>
-                    <a onclick="location.href='@Url.Action("SupermarketInformation","Market")'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
+                    <a onclick="location.href='@Url.Action("SupermarketInformation","Market", new {marketid = Model.Id})'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
                 </div>
             </div>
             <div class="carousel-item">
