@@ -43,14 +43,12 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { productid = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { productid = item.Id, marketid = item.Marketid})
+                    @Html.ActionLink("Delete", "Delete", new { productid = item.Id, marketid = item.Marketid })
                 </td>
             </tr>
-
-            @* Need to be fix it creating multiple button :C *@
-            <div class="form-group">
-                <button onclick="location.href='@Url.Action("SupermarketProducts", "Product", new { marketid = item.Marketid })'" type="button" class="btn btn-dark">Add</button>
-            </div>
         }
+        <div class="form-group">
+            <button onclick="location.href='@Url.Action("SupermarketProducts", "Product", new { marketid = @ViewBag.MarketID })'" type="button" class="btn btn-dark">Add</button>
+        </div>
     </tbody>
 </table>

@@ -41,6 +41,7 @@ namespace Marketeers.Controllers
         [HttpGet]
         public ActionResult ProductFromMarket(int marketid)
         {
+            ViewBag.MarketID = marketid;
             string json = GetProductsFromMarket(marketid) ;
             List<ProductModel> productsfrommarket = JsonConvert.DeserializeObject<List<ProductModel>>(json);
             TempData["productfrommarket"] = productsfrommarket;
