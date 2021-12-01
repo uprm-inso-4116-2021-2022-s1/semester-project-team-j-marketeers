@@ -1,51 +1,29 @@
 ﻿@model IEnumerable<Marketeers.Models.OrderModel>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customerid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Driverid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Marketid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th></th>
-        </tr>
     </thead>
     <tbody>
-@foreach (var item in (IEnumerable<OrderModel>)TempData["orders"]) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customerid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Driverid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Marketid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                <button onclick="location.href='@Url.Action("HelperTakeOrder", "Order", new {orderid = item.Id})'" type="button" class="btn btn-dark">Take</button>
-            </td>
+        <tr class="mx-auto">
+            <h1>Available Orders</h1>
+            <hr/>
+            <div class="card-columns">
+                @foreach (var item in (IEnumerable<OrderModel>)TempData["orders"])
+                {     
+                 <div class="card">
+                    <div class="card-body">
+                       <h5 class="card-title">Customer Name</h5>
+                       <p class="card-text">Customer ID: @Html.DisplayFor(modelItem => item.Customerid)</p>
+                       <p class="card-text">Order Location: @Html.DisplayFor(modelItem => item.Location)</p>
+                       <button onclick="location.href='@Url.Action("HelperTakeOrder", "Order", new {orderid = item.Id})'" type="button" class="btn btn-dark">Take</button>
+
+                       <!--@Html.DisplayFor(modelItem => item.Id)-->
+                       <!--@Html.DisplayFor(modelItem => item.Driverid)-->
+                       <!--@Html.DisplayFor(modelItem => item.Marketid)-->
+                    </div>
+                 </div>
+                }
+            </div>
         </tr>
-}
     </tbody>
 </table>

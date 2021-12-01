@@ -44,6 +44,15 @@ namespace Marketeers.Controllers
         }
 
         //Driver POV
+        //ADDED DRIVER PROFILE VIEW
+
+        [Route("/[controller]/DriverInfo")]
+        [HttpGet]
+        public ActionResult DriverInfo()
+        {
+            return View("DriverInfo");
+        }
+
         [Route("/[controller]/showavailableorder")]
         [HttpGet]
         public ActionResult Order()
@@ -221,7 +230,7 @@ namespace Marketeers.Controllers
         [HttpGet]
         public string GetAllOrdersFreeOrders()
         {
-            string query = @"select orderid, customerid, marketid, location from orders where completed = false and driverid is null";
+            string query = @"select orderid, customerid, marketid, location from orders where completed = false and driverid = 0";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";

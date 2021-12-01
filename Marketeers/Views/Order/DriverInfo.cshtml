@@ -1,0 +1,45 @@
+﻿@model Marketeers.Models.DriverModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>Driver Profile</h1>
+<hr />
+<div class="container mx-auto mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="new-card" style="width: 18rem;">
+                <img src="~/Img/profile-icon-png-removebg-preview.png" style="width:300px; height:300px" class="card-img-top " alt="...">
+                <div class="card-body text-center">
+                    <h4 class="card-title" style="color: black">Username</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Display your username.</h6>
+                    <p class="card-text" style="color: black"><b>Username:</b>@Html.DisplayFor(model => model.Username)</p>
+                    <input type="submit" value="Edit" class="btn-color" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="new-card" style="width: 18rem;">
+                <img src="~/Img/padlock.png" style="width:300px; height:300px" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h4 class="card-title" style="color: black">Password</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Keep your account secure.</h6>
+                    <p class="card-text" style="color: black"><b>Password:</b>@Html.DisplayFor(model => model.Password)</p>
+                    <input type="submit" value="Edit" class="btn-color" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="new-card" style="width: 18rem;">
+                <img src="~/Img/maps-icon-8225.png" style="width:300px; height:300px" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h4 class="card-title" style="color: black">Location</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Your location information.</h6>
+                    <p class="card-text" style="color: black">Location: PR 2 PR-4494, Isabela, Puerto Rico, 00662</p>
+                    <input type="submit" value="Edit" class="btn-color" />
+                </div>
+            </div>
+        </div>
+    </div>
+
