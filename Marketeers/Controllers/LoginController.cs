@@ -39,14 +39,6 @@ namespace Marketeers.Controllers
             }
         }
 
-        [Route("/[controller]/{customerid}")]
-        [HttpGet]
-        public IActionResult GetId(int customerid)
-        {
-            GetCustomerId(customerid);
-            return RedirectToAction("GetOrderSubmission", "Order", new { customerid = customerid });
-        }
-
         //Driver POV
         [Route("/[controller]/DriverIndex")]
         [HttpGet]

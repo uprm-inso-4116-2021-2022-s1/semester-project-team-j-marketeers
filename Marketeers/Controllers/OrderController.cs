@@ -55,8 +55,9 @@ namespace Marketeers.Controllers
 
         [Route("/[controller]/showavailableorder")]
         [HttpGet]
-        public ActionResult Order()
+        public ActionResult Order(int driverid)
         {
+            ViewBag.DriverID = driverid;
             string json = GetAllOrdersFreeOrders();
             List<OrderModel> freeorder = JsonConvert.DeserializeObject<List<OrderModel>>(json);
             TempData["orders"] = freeorder;
@@ -68,6 +69,7 @@ namespace Marketeers.Controllers
         [HttpGet]
         public ActionResult OrderFromDriver(int driverid)
         {
+            ViewBag.DriverID = driverid;
             string json = GetAllOrdersFromDriver(driverid);
             List<OrderModel> orderfromdriver = JsonConvert.DeserializeObject<List<OrderModel>>(json);
             TempData["orderfromdriver"] = orderfromdriver;
@@ -80,15 +82,15 @@ namespace Marketeers.Controllers
         public ActionResult HelperTakeOrder(int orderid, int driverid)
         {
             TakeOrder(orderid, driverid);
-            return RedirectToAction("OrderFromDriver","Order");
+            return RedirectToAction("OrderFromDriver","Order", new { driverid = driverid });
         }
 
         [Route("/[controller]/{orderid}/complete")]
         [HttpGet]
-        public ActionResult HelperCompleteOrder(int orderid)
+        public ActionResult HelperCompleteOrder(int orderid, int driverid)
         {
             CompleteOrderStatus(orderid);
-            return RedirectToAction("OrderFromDriver", "Order");
+            return RedirectToAction("OrderFromDriver", "Order", new { driverid = driverid });
         }
 
         //Market POV
@@ -116,10 +118,10 @@ namespace Marketeers.Controllers
 
         [Route("/[controller]/{orderid}/ready")]
         [HttpGet]
-        public ActionResult HelperReadyOrder(int orderid)
+        public ActionResult HelperReadyOrder(int orderid, int marketid)
         {
             ReadyOrderStatus(orderid);
-            return RedirectToAction("OrderFromMarket", "Order");
+            return RedirectToAction("OrderFromMarket", "Order", new { marketid = marketid });
         }
 
         //Back-End Method API
@@ -327,7 +329,7 @@ namespace Marketeers.Controllers
                     myCon.Close();
                 }
             }
-            return JsonConvert.SerializeObject("Order is complete");
+            return JsonConvert.SerializeObject("Order is taken");
         }
 
         [Route("api/[controller]/complete/{orderid}")]

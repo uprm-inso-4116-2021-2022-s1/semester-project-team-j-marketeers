@@ -55,7 +55,7 @@
                 </td>
             </tr>
             <div class="form-group">
-                <button onclick="location.href='@Url.Action("HelperReadyOrder", "Order", new { orderid = item.Id })'" type="button" class="btn btn-dark">Ready</button>
+                <button onclick="location.href='@Url.Action("HelperReadyOrder", "Order", new { orderid = item.Id, marketid = item.Marketid })'" type="button" class="btn btn-dark">Ready</button>
             </div>
         }
     </tbody>

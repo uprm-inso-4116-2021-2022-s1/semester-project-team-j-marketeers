@@ -11,16 +11,16 @@
                 @foreach (var item in (IEnumerable<OrderModel>)TempData["orders"])
                 {     
                  <div class="card">
-                    <div class="card-body">
-                       <h5 class="card-title">Customer Name</h5>
-                       <p class="card-text">Customer ID: @Html.DisplayFor(modelItem => item.Customerid)</p>
-                       <p class="card-text">Order Location: @Html.DisplayFor(modelItem => item.Location)</p>
-                       <button onclick="location.href='@Url.Action("HelperTakeOrder", "Order", new {orderid = item.Id})'" type="button" class="btn btn-dark">Take</button>
+                     <div class="card-body">
+                         <h5 class="card-title">Customer Name</h5>
+                         <p class="card-text">Customer ID: @Html.DisplayFor(modelItem => item.Customerid)</p>
+                         <p class="card-text">Order Location: @Html.DisplayFor(modelItem => item.Location)</p>
+                         <button onclick="location.href='@Url.Action("HelperTakeOrder", "Order", new { orderid = item.Id, driverid = @ViewBag.DriverID })'" type="button" class="btn btn-dark">Take</button>
 
-                       <!--@Html.DisplayFor(modelItem => item.Id)-->
-                       <!--@Html.DisplayFor(modelItem => item.Driverid)-->
-                       <!--@Html.DisplayFor(modelItem => item.Marketid)-->
-                    </div>
+                         <!--@Html.DisplayFor(modelItem => item.Id)-->
+                         <!--@Html.DisplayFor(modelItem => item.Driverid)-->
+                         <!--@Html.DisplayFor(modelItem => item.Marketid)-->
+                     </div>
                  </div>
                 }
             </div>

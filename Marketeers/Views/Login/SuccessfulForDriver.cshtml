@@ -19,7 +19,7 @@
                     <h1>Want to start delivering some orders?</h1>
                     <p>Here you can see available orders to choose to attend</p>
                 </div>
-                <a onclick="location.href='@Url.Action("Order","Order", new {driverid = Model.Id})'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
+                <a onclick="location.href='@Url.Action("Order","Order", new { driverid = Model.Id})'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
             </div>
         </div>
         <div class="carousel-item">
@@ -29,11 +29,8 @@
                     <h1>Need to check your scheduled orders?</h1>
                     <p>See the list of orders you have selected.</p>
                 </div>
-                <a onclick="location.href='@Url.Action("OrderFromDriver","Order")'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
-
-                <!--WITH ID
-                    <a onclick="location.href='@Url.Action("OrderFromDriver","Order", new {driverid = Model.Id})'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>-->
-
+                @Html.DisplayFor(modelItem => Model.Id)
+                <a onclick="location.href='@Url.Action("OrderFromDriver","Order", new {driverid = Model.Id})'" class="btn btn-primary btn-xl rounded-pill mt-5 mb-5 hero-btn" role="button" href="#" style="background: rgb(0,0,0);border-style: none;">CLICK HERE</a>
             </div>
         </div>
     </div>
