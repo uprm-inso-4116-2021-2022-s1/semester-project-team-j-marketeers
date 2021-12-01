@@ -34,8 +34,8 @@
 
                             <p> Quantity </p>
                             <div class="input-group mb-3 center">
-                                <button href="#" class="btn btn-outline-secondary" style="font-size: 13px; width:50px; margin-right: 5px">Add</button>
                                 <input type="number" id="quantity" name="quantity" min="0" max="@item.quantity">
+                                <button onclick="location.href='@Url.Action("GetOrderSubmission", "Order", new { productid = item.Id, marketid = item.Marketid, customerid = @ViewBag.CustomerID })'" type="button" class="btn btn-dark">Add</button>
                             </div>
                         </div>
                     </div>

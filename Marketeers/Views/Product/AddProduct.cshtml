@@ -1,0 +1,51 @@
+﻿@model Marketeers.Models.ProductModel
+
+<h4>ProductModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="get" asp-action="RestockProducts">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.DisplayFor(model => model.Marketid)
+                @*<label asp-for="Marketid" class="control-label"></label>*@
+                <input asp-for="Marketid" class="form-control" type="hidden" />
+                <span asp-validation-for="Marketid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Itemname" class="control-label"></label>
+                <input asp-for="Itemname" class="form-control" />
+                <span asp-validation-for="Itemname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="price" class="control-label"></label>
+                <input asp-for="price" class="form-control" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="quantity" class="control-label"></label>
+                <input asp-for="quantity" class="form-control" />
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+
+            <h6>Upload Image of Product</h6>
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile02">
+                    <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                    <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Product" class="btn-color" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

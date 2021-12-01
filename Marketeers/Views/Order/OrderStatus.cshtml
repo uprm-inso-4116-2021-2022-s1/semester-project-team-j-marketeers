@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Marketeers.Models.OrderModel>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customerid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Driverid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marketid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Productid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Itemid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Itemname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Complete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ready)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in (IEnumerable<OrderModel>)TempData["orderfromcustomer"]) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customerid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Driverid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marketid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Productid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Itemid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Itemname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Complete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ready)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

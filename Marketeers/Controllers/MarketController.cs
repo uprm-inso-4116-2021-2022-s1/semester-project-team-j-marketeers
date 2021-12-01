@@ -19,42 +19,32 @@ namespace Marketeers.Controllers
     [ApiController]
     public class MarketController : Controller
     {
-        [Route("/[controller]/SupermarketProducts")]
-        [HttpGet]
-        public IActionResult SupermarketProducts()
-        {
-            return View("SupermarketProducts");
-        }
-
+        //Market POV
         [Route("/[controller]/SupermarketInformation")]
         [HttpGet]
         public IActionResult SupermarketInfo()
         {
             return View("SupermarketInfo");
         }
-        [Route("/[controller]/SupermarketOrder")]
-        [HttpGet]
-        public IActionResult SupermarketOrder()
-        {
-            return View("SupermarketOrder");
-        }
 
-        [Route("/[controller]/show")]
+        //Customer POV
+        [Route("/[controller]/showmarket")]
         [HttpGet]
-        public ActionResult Market()
+        public ActionResult ShowMarket(int customerid)
         {
+            ViewBag.CustomerID = customerid;
             string json = GetAllMarkets();
             List<MarketModel> markets = JsonConvert.DeserializeObject<List<MarketModel>>(json);
             TempData["market"] = markets;
             return View("ShowMarket");
         }
 
+        //Do Not Remember For What This Is For :C
         [Route("/[controller]/{marketid}")]
         [HttpGet]
         public ActionResult MarketToProduct(int marketid)
         {
-            string id = marketid.ToString();
-            return RedirectToAction(id, "Product");
+            return RedirectToAction(marketid.ToString(), "Product");
         }
 
         //Back-End Method API
@@ -110,8 +100,5 @@ namespace Marketeers.Controllers
             }
             return JsonConvert.SerializeObject(table);
         }
-
-
-        
     }
 }

@@ -12,17 +12,38 @@ using Newtonsoft.Json;
 
 namespace Marketeers.Controllers
 {
-    
     [ApiController]
     public class OrderController : Controller
     {
-
-        private readonly IConfiguration _configuration;
-        public OrderController(IConfiguration configuration)
+        //Customer POV
+        [Route("/[controller]/orderstatus")]
+        [HttpGet]
+        public IActionResult GetOrderStatus(int customerid)
         {
-            _configuration = configuration;
+            string json = GetAllOrdersFromCustomer(customerid);
+            List<OrderModel> orderfromcustomer = JsonConvert.DeserializeObject<List<OrderModel>>(json);
+            TempData["orderfromcustomer"] = orderfromcustomer;
+            return View("OrderStatus");
         }
 
+        [Route("/[controller]/ordersubmission")]
+        [HttpGet]
+        public ActionResult GetOrderSubmission(int customerid, int marketid, int productid)
+        {
+            return View("OrderSubmission");
+        }
+
+        [Route("/[controller]/makeorder")]
+        [HttpPost]
+        public IActionResult MakeOrder([FromForm] OrderModel order)
+        {
+            string json = AddOrder(order);
+            List <OrderModel> orderid = JsonConvert.DeserializeObject<List<OrderModel>>(json);
+            AddItemToOrder(order.Productid, orderid.First().Id);
+            return RedirectToAction("GetOrderStatus", "Order", new { customerid = order.Customerid });
+        }
+
+        //Driver POV
         [Route("/[controller]/showavailableorder")]
         [HttpGet]
         public ActionResult Order()
@@ -33,21 +54,23 @@ namespace Marketeers.Controllers
             return View("ShowFreeOrders");
         }
 
+        //Get: All Order
         [Route("/[controller]/orderfromdriver")]
         [HttpGet]
-        public ActionResult OrderFromDriver()
+        public ActionResult OrderFromDriver(int driverid)
         {
-            string json = GetAllOrdersFromDriver(4);
+            string json = GetAllOrdersFromDriver(driverid);
             List<OrderModel> orderfromdriver = JsonConvert.DeserializeObject<List<OrderModel>>(json);
             TempData["orderfromdriver"] = orderfromdriver;
             return View("OrderFromDriver");
         }
 
+        //ACTION: Accept/Take and Complete Order
         [Route("/[controller]/{orderid}/take")]
         [HttpGet]
-        public ActionResult HelperTakeOrder(int orderid)
+        public ActionResult HelperTakeOrder(int orderid, int driverid)
         {
-            TakeOrder(orderid, 4);
+            TakeOrder(orderid, driverid);
             return RedirectToAction("OrderFromDriver","Order");
         }
 
@@ -59,31 +82,43 @@ namespace Marketeers.Controllers
             return RedirectToAction("OrderFromDriver", "Order");
         }
 
-
-        [Route("api/[controller]/OrderSubmissionIndex")]
+        //Market POV
+        //Get: All Order
+        [Route("/[controller]/orderfrommarket")]
         [HttpGet]
-        public IActionResult GetOrderSubmission()
+        public ActionResult OrderFromMarket(int marketid)
         {
-            return View("OrderSubmission");
+            string json = GetAllOrdersFromMarket(marketid);
+            List<OrderModel> orderfrommarket = JsonConvert.DeserializeObject<List<OrderModel>>(json);
+            TempData["orderfrommarket"] = orderfrommarket;
+            return View("OrderFromMarket");
         }
 
-        [Route("/[controller]/OrderConfirmationIndex")]
+        //ACTION: Select to see items and Ready to Pickup Order
+        [Route("/[controller]/{orderid}/showitems")]
         [HttpGet]
-        public IActionResult GetOrderConfirmation()
+        public ActionResult HelperSelectOrder(int orderid)
         {
-            return View("OrderConfirmation");
+            string json = GetItemsFromOrder(orderid);
+            List<OrderModel> showitems = JsonConvert.DeserializeObject<List<OrderModel>>(json);
+            TempData["showitems"] = showitems;
+            return View("ShowItems");
         }
 
+        [Route("/[controller]/{orderid}/ready")]
+        [HttpGet]
+        public ActionResult HelperReadyOrder(int orderid)
+        {
+            ReadyOrderStatus(orderid);
+            return RedirectToAction("OrderFromMarket", "Order");
+        }
+
+        //Back-End Method API
         [Route("api/[controller]/all")]
         [HttpGet]
         public string GetAllOrders()
         {
-            string query = @"
-                select orderid,
-                       customerid,
-                       marketid
-                from orders
-            ";
+            string query = @"select orderid, customerid, marketid from orders";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -101,7 +136,6 @@ namespace Marketeers.Controllers
 
                 }
             }
-
             return JsonConvert.SerializeObject(table);
         }
 
@@ -109,13 +143,7 @@ namespace Marketeers.Controllers
         [HttpGet]
         public string GetAllOrdersFromMarket(int marketid)
         {
-            string query = @"
-                select orderid,
-                       customerid,
-                       marketid
-                from orders
-                where marketid = @marketid
-            ";
+            string query = @"select orderid, customerid, marketid from orders where marketid = @marketid and ready = false";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -141,11 +169,7 @@ namespace Marketeers.Controllers
         [HttpGet]
         public string GetAllOrdersFromCustomer(int customerid)
         {
-            string query = @"
-                select *
-                from orders
-                where customerid = @customerid
-            ";
+            string query = @"select * from orders where customerid = @customerid";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -167,15 +191,11 @@ namespace Marketeers.Controllers
             return JsonConvert.SerializeObject(table);
         }
 
-        [Route("api/[controller]/customer/{driverid}")]
+        [Route("api/[controller]/driver/{driverid}")]
         [HttpGet]
         public string GetAllOrdersFromDriver(int driverid)
         {
-            string query = @"
-                select *
-                from orders
-                where driverid = @driverid and completed = false
-            ";
+            string query = @"select * from orders where driverid = @driverid and completed = false";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -201,14 +221,7 @@ namespace Marketeers.Controllers
         [HttpGet]
         public string GetAllOrdersFreeOrders()
         {
-            string query = @"
-                select orderid,
-                       customerid,
-                       marketid,
-                       location
-                from orders
-                where completed = false and driverid is null
-            ";
+            string query = @"select orderid, customerid, marketid, location from orders where completed = false and driverid is null";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -233,10 +246,7 @@ namespace Marketeers.Controllers
         [HttpPost]
         public string AddOrder(OrderModel order)
         {
-            string query = @"
-                insert into orders(customerid, marketid, location)
-                values(@customerid, @marketid, @location)
-            ";
+            string query = @"insert into orders(customerid, marketid, location) values(@customerid, @marketid, @location) returning orderid";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -256,17 +266,14 @@ namespace Marketeers.Controllers
                     myCon.Close();
                 }
             }
-            return JsonConvert.SerializeObject("Order is added");
+            return JsonConvert.SerializeObject(table);
         }
 
-        [Route("api/[controller]/add")]
+        [Route("api/[controller]/additem")]
         [HttpPost]
-        public string AddItemToOrder(OrderedItemModel item)
+        public string AddItemToOrder(int productid, int orderid)
         {
-            string query = @"
-                insert into items(productid, orderid)
-                values(@productid, @orderid)
-            ";
+            string query = @"insert into items(productid, orderid) values(@productid, @orderid)";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -277,8 +284,8 @@ namespace Marketeers.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@productid", item.Productid);
-                    myCommand.Parameters.AddWithValue("@orderid", item.Orderid);
+                    myCommand.Parameters.AddWithValue("@productid", productid);
+                    myCommand.Parameters.AddWithValue("@orderid", orderid);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();
@@ -318,11 +325,7 @@ namespace Marketeers.Controllers
         [HttpPut]
         public string CompleteOrderStatus(int orderid)
         {
-            string query = @"
-                update orders
-                set completed = true
-                where orderid = @orderid
-            ";
+            string query = @"update orders set completed = true where orderid = @orderid";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -342,16 +345,37 @@ namespace Marketeers.Controllers
             }
             return JsonConvert.SerializeObject("Order is complete");
         }
-        
+
+        [Route("api/[controller]/ready/{orderid}")]
+        [HttpPut]
+        public string ReadyOrderStatus(int orderid)
+        {
+            string query = @"update orders set ready = true where orderid = @orderid";
+
+            DataTable table = new DataTable();
+            string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
+
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(connectionString))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@orderid", orderid);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+            return JsonConvert.SerializeObject("Order is ready");
+        }
+
         [Route("api/[controller]/{orderid}/products")]
         [HttpGet]
         public string GetItemsFromOrder(int orderid)
         {
-            string query = @"
-                select *
-                from items natural inner join products
-                where orderid = @orderid
-            ";
+            string query = @"select * from items natural inner join products where orderid = @orderid";
 
             DataTable table = new DataTable();
             string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
@@ -371,7 +395,6 @@ namespace Marketeers.Controllers
 
                 }
             }
-
             return JsonConvert.SerializeObject(table);
         }
     }

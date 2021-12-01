@@ -6,10 +6,6 @@ using Newtonsoft.Json;
 
 namespace Marketeers.Models
 {
-    public class ProductList
-    {
-        public List<ProductModel> productlist { get; set; }
-    }
     public class ProductModel
     {
         [JsonProperty("productid")]

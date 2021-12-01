@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Marketeers.Models.ProductModel>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Itemname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marketid)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (IEnumerable<ProductModel>)TempData["productfrommarket"])
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Itemname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marketid)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { productid = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { productid = item.Id, marketid = item.Marketid })
+                </td>
+            </tr>
+        }
+        <div class="form-group">
+            <button onclick="location.href='@Url.Action("SupermarketProducts", "Product", new { marketid = @ViewBag.MarketID })'" type="button" class="btn btn-dark">Add</button>
+        </div>
+    </tbody>
+</table>

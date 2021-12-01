@@ -13,92 +13,75 @@ namespace Marketeers.Controllers
 {
     public class ProductController : Controller
     {
-        //Customer Method
-
-        // GET: ProductController/1
-        [Route("/[controller]/{marketid}")]
+        //Future: shopping cart maybe
+        [Route("/[controller]/showall")]
         [HttpGet]
-        public ActionResult Product(int marketid)
+        public ActionResult ProductAll()
         {
+            string json = GetAllProducts();
+            List<ProductModel> products = JsonConvert.DeserializeObject<List<ProductModel>>(json);
+            TempData["product"] = products;
+            return View("ShowProduct");
+        }
+
+        // Customer POV
+        [Route("/[controller]/showproduct")]
+        [HttpGet]
+        public ActionResult ProductFromCustomer(int marketid, int customerid)
+        {
+            ViewBag.CustomerID = customerid;
             string json = GetProductsFromMarket(marketid);
             List<ProductModel> products = JsonConvert.DeserializeObject<List<ProductModel>>(json);
             TempData["product"] = products;
             return View("ShowProduct");
         }
 
-        //Supermarket Method
+        // Market POV
+        [Route("/[controller]/stock")]
+        [HttpGet]
+        public ActionResult ProductFromMarket(int marketid)
+        {
+            ViewBag.MarketID = marketid;
+            string json = GetProductsFromMarket(marketid) ;
+            List<ProductModel> productsfrommarket = JsonConvert.DeserializeObject<List<ProductModel>>(json);
+            TempData["productfrommarket"] = productsfrommarket;
+            return View("ShowProductFromMarket");
+        }
 
-        // GET: ProductController/Create
-        public ActionResult Create()
+        [Route("/[controller]/SupermarketProducts")]
+        [HttpGet]
+        public IActionResult SupermarketProducts(int marketid)
+        {
+            return View("AddProduct");
+        }
+
+        // Modify Product
+        [Route("/[controller]/restock")]
+        [HttpGet]
+        public IActionResult RestockProducts(ProductModel product)
+        {
+            AddProduct(product);
+            return RedirectToAction("ProductFromMarket", "Product", new {marketid = product.Marketid});
+        }
+
+        [Route("/[controller]/delete")]
+        [HttpGet]
+        public ActionResult Delete(int productid, int marketid)
+        {
+            RemoveProduct(productid);
+            return RedirectToAction("ProductFromMarket", "Product", new { marketid = marketid });
+        }
+
+        [Route("/[controller]/edit")]
+        [HttpGet]
+        public ActionResult Edit(int productid)
         {
             return View();
         }
 
-        // GET: ProductController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         //Back-End Method API
-        [Route("/[controller]/all")]
+        [Route("api/[controller]/all")]
         [HttpGet]
         public string GetAllProducts()
         {
@@ -178,15 +161,83 @@ namespace Marketeers.Controllers
             return JsonConvert.SerializeObject(table);
         }
 
-        [Route("/[controller]/show")]
-        [HttpGet]
-        public ActionResult ProductAll()
+        [Route("api/[controller]/add")]
+        [HttpPost]
+        public string AddProduct(ProductModel product)
         {
-            string json = GetAllProducts();
-            List<ProductModel> products = JsonConvert.DeserializeObject<List<ProductModel>>(json);
-            TempData["product"] = products;
-            return View("ShowProduct");
+            string query = @"insert into products(marketid, itemname, price, quantity) values(@marketid, @itemname, @price, @quantity)";
+
+            DataTable table = new DataTable();
+            string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
+
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(connectionString))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@marketid", product.Marketid);
+                    myCommand.Parameters.AddWithValue("@itemname", product.Itemname);
+                    myCommand.Parameters.AddWithValue("@price", product.price);
+                    myCommand.Parameters.AddWithValue("@quantity", product.quantity);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+            return JsonConvert.SerializeObject("Product is added");
         }
 
+        [Route("api/[controller]/remove")]
+        [HttpPost]
+        public string RemoveProduct(int productid)
+        {
+            string query = @"delete from products where productid = @productid";
+
+            DataTable table = new DataTable();
+            string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
+
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(connectionString))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@productid", productid);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+            return JsonConvert.SerializeObject("Product is removed");
+        }
+
+        [Route("api/[controller]/add")]
+        [HttpPost]
+        public string EditQuantity(int change, int productid)
+        {
+            string query = @"update products set quantity = quantity + @change where productid = @productid";
+
+            DataTable table = new DataTable();
+            string connectionString = @"Server=ec2-34-234-12-149.compute-1.amazonaws.com;Database=dcotbsj3q6c5t4;Port=5432;sslmode=Require;Trust Server Certificate=true;User Id=misqawyzokbawh;Password=d40b0e9a9ee57c1ff241f9d69b354a39b68cd6c79bfbb9752cf9ec9bddcd0968";
+
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(connectionString))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@productid", productid);
+                    myCommand.Parameters.AddWithValue("@change", change);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+            return JsonConvert.SerializeObject("Quantity updated");
+        }
     }
 }

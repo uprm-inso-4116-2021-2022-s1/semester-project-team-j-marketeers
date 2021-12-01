@@ -4,15 +4,33 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Login">
+        <form method="post" asp-action="MakeOrder">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.DisplayFor(model => model.Customerid)
+                @*<label asp-for="Customerid" class="control-label"></label>*@
+                <input asp-for="Customerid" class="form-control" type="hidden" />
+                <span asp-validation-for="Customerid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayFor(model => model.Marketid)
+                @*<label asp-for="Marketid" class="control-label"></label>*@
+                <input asp-for="Marketid" class="form-control" type="hidden"/>
+                <span asp-validation-for="Marketid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayFor(model => model.Productid)
+                @*<label asp-for="Productid" class="control-label"></label>*@
+                <input asp-for="Productid" class="form-control" type="hidden" />
+                <span asp-validation-for="Productid" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
                 <input asp-for="Location" class="form-control" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" a href="@Url.Action("Index","DisplayOrder")" value="Submit Order" class="btn btn-primary" />
+                <input type="submit" value="Submit Order" class="btn btn-primary" />
             </div>
         </form>
     </div>
